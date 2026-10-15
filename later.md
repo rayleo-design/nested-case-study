@@ -13,6 +13,9 @@ Work in progress is verified on the **web breakpoint only (1440 wide)**. Before 
 - [x] 3D model shrunk with `KHR_mesh_quantization` (16-bit positions/UVs/indices, 8-bit normals, no tangents) and a JPEG normal map: geometry 3.0 MB → 1.2 MB (1.67 MB → 661 KB gzipped), textures 412 KB → 160 KB. The loader dequantizes attributes before splitting off the screen. Originals kept locally in `_scratch/iphone14-orig/` (gitignored).
 
 ## Next time
+- [x] 03 · The UX work: checked at 390 (board first, one column, no horizontal scroll) before the push on 2026-10-15.
+- [ ] The UX work at 768.
+- [ ] Design system: the two new rows (AI patterns; controls and tokens) at 390 / 768.
 - [ ] Re-check any section changed since this pass at 390 / 768 / 1024.
 - [ ] Optional further shrink: meshopt compression (gltfpack) would roughly halve the geometry again, but needs the meshopt decoder in the import map.
 - [ ] On low-end phones, consider a lower pixel ratio for the two canvases if the hero or solution scene stutters.

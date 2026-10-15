@@ -280,6 +280,55 @@ a{color:inherit}
   .quote::before{transform:none}.quote blockquote .w,.quote figcaption,.pt{opacity:1;transform:none}.pt + .pt::before{transform:none}
 }
 
+/* ===================== The UX work (light) =====================
+   Four steps. Each recreated working artifact (inline SVG) is pinned on a dotted board, with its story beside it. */
+.uxwork{--u-ink:#0B0B0C;--u-ink-2:#4B505B;--u-ink-3:#6B707C;--u-line:#E3E6EC;--u-blue:#2A63F2;--u-blue-50:#EEF4FF;--u-amber:#9A6700;
+  position:relative;z-index:2;color:var(--u-ink);background:#fff;padding-block:clamp(24px,4vw,64px) clamp(96px,12vw,180px)}
+.uxwork .grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--sp-6) clamp(32px,6vw,96px);align-items:start}
+.uxwork .ab-title{position:static}
+.uxwork .ab-title .bar{background:var(--u-ink)}
+.uxwork.in .ab-title .bar{transform:scaleX(1)}
+.uw-body{display:flex;flex-direction:column;gap:var(--sp-4);max-width:42rem}
+.uw-lead{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(18px,.9rem + .45vw,22px);line-height:1.4;letter-spacing:-.012em}
+.uw-body p.copy{margin:0;font-size:16px;line-height:1.6;color:var(--u-ink-2)}
+
+/* each step: the artifact pinned on a dotted cream board (like the features' floating cards), text beside it, sides alternating */
+.uw-rail{margin-top:clamp(40px,5vw,72px)}
+.uw-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:clamp(40px,5vw,72px)}
+.uw-step{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(32px,5vw,88px);align-items:center;
+  opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.uw-step.in{opacity:1;transform:none}
+.uw-step:nth-child(even){grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
+.uw-step:nth-child(even) .uw-vis{order:2}
+.uw-vis{position:relative;display:grid;place-items:center;padding:clamp(24px,2.6vw,36px) clamp(20px,3vw,40px);border-radius:28px;
+  background:#F6F3EE radial-gradient(circle,#DAD4CA 1px,transparent 1.3px) 0 0/18px 18px}
+.uw-art{display:block;margin:0;width:100%;max-width:400px;border-radius:14px;overflow:hidden;background:#fff;transform:rotate(-1.4deg);
+  box-shadow:0 1px 0 rgba(11,18,48,.04),0 30px 60px -30px rgba(40,30,20,.45),0 0 0 1px rgba(11,18,48,.06);transition:transform .6s var(--ease)}
+.uw-step:nth-child(even) .uw-art{transform:rotate(1.4deg)}
+.uw-step:hover .uw-art{transform:none}
+.uw-art svg{display:block;width:100%;height:auto}
+.uw-txt{max-width:26rem}
+.uw-step h3{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(20px,1rem + .5vw,24px);letter-spacing:-.02em;line-height:1.25}
+.uw-step p{margin:10px 0 0;font-size:16px;line-height:1.6;color:var(--u-ink-2)}
+.uw-step p.learn{margin-top:18px;padding-left:14px;border-left:2px solid var(--u-blue);color:var(--u-ink);font-weight:600;font-size:15px;line-height:1.5}
+.uw-close{margin:clamp(56px,7vw,88px) 0 0;text-align:center;font-family:var(--font-sans);font-weight:700;font-size:clamp(20px,1rem + .6vw,24px);letter-spacing:-.02em;text-wrap:balance}
+.uw-close b{color:var(--u-blue)}
+.uw-note{margin:12px 0 0;text-align:center;font-family:var(--font-mono);font-size:11.5px;color:var(--u-ink-3)}
+
+
+@media (max-width:899.98px){
+  .uxwork .grid{grid-template-columns:1fr}
+  .uw-step,.uw-step:nth-child(even){grid-template-columns:1fr;gap:24px}
+  .uw-step:nth-child(even) .uw-vis{order:0}
+}
+@media (max-width:599.98px){
+  .uw-vis{padding:22px 16px;border-radius:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  .uw-step,.uw-art{transition:none}
+  .uw-step{opacity:1;transform:none}
+}
+
 /* ===================== 03 · Challenge -> Solution (pinned scroll scene) =====================
    gradient opens -> challenge line -> becomes the solution line -> phone rises and pushes it away
    -> phone flips onto an angle -> three labels -> phone twists and flies out of the top. */
@@ -394,6 +443,8 @@ a{color:inherit}
 .sec-t h2{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(22px,1rem + .6vw,26px);line-height:1.1;letter-spacing:-.025em;color:inherit}
 .sec-t .bar{display:block;width:40px;height:3px;border-radius:2px;background:currentColor}
 .sec-t.c{align-items:center}
+/* centred titles stack the number above the title */
+.sec-t.c .row{flex-direction:column;align-items:center;gap:6px}
 .fs-copy .lead-t,.aiA .lead-t{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(18px,.9rem + .45vw,22px);line-height:1.4;letter-spacing:-.012em}
 .fs-copy .sec-t{margin-bottom:8px}
 
@@ -535,7 +586,7 @@ a{color:inherit}
 .cw .foot b{color:var(--a-ink-2);font-weight:700;letter-spacing:.04em;font-size:10.5px}
 
 /* ---------- 5 · Design system: sliding rows ---------- */
-.dsc{overflow:hidden;margin-top:clamp(28px,4vw,52px)}
+.dsc{overflow:hidden;margin-top:clamp(8px,2vw,28px);padding-block:20px 56px}  /* room inside the clip so the cards' drop shadows aren't cut off */
 .dsc .rows{display:flex;flex-direction:column;gap:18px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 .dsc .row{display:flex;gap:16px;align-items:center;width:max-content;will-change:transform;padding-block:14px}
 .dsc .row > *{flex:none}
@@ -561,6 +612,63 @@ a{color:inherit}
 .dsc .tabbar{display:flex;gap:4px;padding:7px;border-radius:20px;font-family:var(--app);font-size:11px;font-weight:600;color:var(--a-ink-3)}
 .dsc .tabbar span{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 12px;border-radius:14px}
 .dsc .tabbar span.on{background:var(--cobalt-100);color:var(--cobalt-700)}
+/* AI layer row: the product's AI patterns (suggestion + confidence, Why this?, signal strength, Pending, drafts not sent) */
+.dsc .aisg{width:310px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.dsc .aisg .hdr{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--cobalt-700)}
+.dsc .aisg .hdr .ic{width:15px;height:15px}
+.dsc .aisg p{margin:0;font-size:14px;line-height:1.4}
+.dsc .aisg a{display:inline-flex;align-items:center;gap:2px;font-size:13px;font-weight:700;color:var(--cobalt)}
+.dsc .aisg a .ic{width:14px;height:14px}
+.dsc .sg{display:flex;gap:8px}
+.dsc .sg .st{font-family:var(--app);font-size:12.5px;font-weight:700;border-radius:999px;padding:5px 12px}
+.dsc .chip.pendg{font-size:12.5px;padding:5px 12px 5px 9px;gap:6px;background:#fff;color:var(--a-ink-2);box-shadow:inset 0 0 0 1.4px #B9BCC6}
+.dsc .chip.pendg .mk{width:11px;height:11px;box-sizing:border-box;border:2px dashed #9AA0B4;background:transparent}
+.dsc .draft{width:310px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.dsc .draft .hdr{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700}
+.dsc .draft .ap{width:20px;height:20px;border-radius:6px;background:#25B35A;display:grid;place-items:center;flex:none}
+.dsc .draft .ap svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.dsc .draft .ns{margin-left:auto;font-family:var(--app-m);font-size:10.5px;font-weight:500;color:var(--a-ink-3);background:var(--paper-2);border-radius:6px;padding:2px 7px}
+.dsc .draft p{margin:0;font-size:14px;line-height:1.45;background:#E9F7EE;border-radius:12px 12px 4px 12px;padding:10px 12px}
+.dsc .draft .b{display:flex;gap:8px;justify-content:flex-end}
+.dsc .btn.sm{height:34px;padding:0 15px;font-size:13px}
+.dsc .cf{display:flex;gap:4px;padding:5px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px rgba(11,18,48,.06),0 12px 26px -16px rgba(40,30,20,.3)}
+.dsc .cf > span{display:inline-flex;align-items:center;gap:2px;font-family:var(--app);font-size:12.5px;font-weight:600;color:var(--a-ink-2);padding:6px 11px;border-radius:999px}
+.dsc .cf > span:first-child{background:var(--cobalt-100);color:var(--cobalt-700)}
+.dsc .toast{display:inline-flex;align-items:center;gap:10px;padding:11px 18px 11px 11px;border-radius:14px;background:var(--a-ink);color:#fff;font-family:var(--app);font-size:14px;font-weight:600;box-shadow:0 18px 30px -18px rgba(11,18,48,.6)}
+.dsc .toast .tk{width:22px;height:22px;border-radius:50%;background:#1F9D57;display:grid;place-items:center;font-size:12px}
+/* controls and tokens row */
+.dsc .seg{display:flex;gap:4px;padding:5px;border-radius:999px;background:var(--cobalt);font-family:var(--app);font-size:14px;font-weight:600;color:rgba(255,255,255,.85)}
+.dsc .seg span{padding:8px 16px;border-radius:999px;white-space:nowrap}
+.dsc .seg span.on{background:#fff;color:var(--a-ink)}
+.dsc .seg b{font-weight:500;opacity:.7;margin-left:4px}
+.dsc .rbs{display:flex;gap:10px}
+.dsc .rb{width:46px;height:46px}.dsc .rb.go{background:#FFF1E5;color:#C2611F}
+.dsc .stp{width:330px;padding:14px 18px}
+.dsc .stdots{position:relative;display:flex;align-items:center;justify-content:space-between}
+.dsc .stdots::before{content:"";position:absolute;left:6px;right:6px;top:50%;height:2px;background:#D6DAE6;transform:translateY(-50%)}
+.dsc .stdots::after{content:"";position:absolute;left:6px;width:50%;top:50%;height:2px;background:var(--cobalt);transform:translateY(-50%)}
+.dsc .stdots i{position:relative;z-index:1;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2px #C3C8D6}
+.dsc .stdots i.d{background:var(--cobalt);box-shadow:none}
+.dsc .stdots i.c{box-shadow:inset 0 0 0 3px var(--cobalt),0 0 0 4px var(--cobalt-100)}
+.dsc .stp .lb{display:flex;justify-content:space-between;margin-top:9px;font-size:11px;color:var(--a-ink-3)}
+.dsc .stp .lb .on{color:var(--cobalt);font-weight:700}
+.dsc .srch{display:inline-flex;align-items:center;gap:10px;width:280px;height:46px;padding:0 16px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1.5px var(--stroke);font-family:var(--app);font-size:14px;color:var(--a-ink-3)}
+.dsc .gauge{width:170px;padding:14px 16px 12px;text-align:center}
+.dsc .gauge svg{display:block;width:100%;height:auto}
+.dsc .gauge b{display:block;margin-top:-30px;font-family:var(--app-d);font-weight:600;font-size:28px;line-height:1}
+.dsc .gauge b small{font-size:14px;color:var(--a-ink-2);font-weight:500}
+.dsc .gauge span{display:block;margin-top:8px;font-size:11.5px;font-weight:700;color:var(--warm)}
+.dsc .tg{display:inline-flex;align-items:center;gap:14px;padding:12px 14px 12px 16px;font-size:14px;font-weight:600;border-radius:16px;white-space:nowrap}
+.dsc .sw{position:relative;width:40px;height:24px;border-radius:999px;background:var(--cobalt);flex:none}
+.dsc .sw::after{content:"";position:absolute;right:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.dsc .tok{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:16px;background:#fff;box-shadow:0 0 0 1px rgba(11,18,48,.06),0 12px 26px -16px rgba(40,30,20,.3)}
+.dsc .tok.rad i{width:30px;height:30px;background:var(--cobalt-100);box-shadow:inset 0 0 0 1.5px var(--cobalt-300)}
+.dsc .tok.spc i{height:26px;background:var(--hot);border-radius:2px}
+.dsc .tok small{margin-left:6px;font-family:var(--app-m);font-size:11px;color:var(--a-ink-3);white-space:nowrap}
+.dsc .av{display:flex;align-items:center}
+.dsc .av i{width:38px;height:38px;margin-left:-10px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--app);font-weight:700;font-size:12px;color:#fff;box-shadow:0 0 0 3px var(--cream)}
+.dsc .av i:first-child{margin-left:0;background:var(--cobalt)}.dsc .av i:nth-child(2){background:#E9773A}.dsc .av i:nth-child(3){background:var(--a-ink)}
+.dsc .av b{margin-left:10px;font-family:var(--app);font-size:13px;font-weight:600;color:var(--a-ink-2);white-space:nowrap}
 @media (max-width:559.98px){.dsc .typ{font-size:42px}.dsc .typ.g{font-size:32px}}
 .ft-end{height:clamp(80px,12vw,160px)}
 
@@ -690,10 +798,8 @@ a{color:inherit}
 .endx .road::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:linear-gradient(90deg,#8FAEFF,var(--apricot) 55%,var(--w-line))}
 .endx .stop{position:relative;padding-top:34px}
 .endx .stop::before{content:"";position:absolute;top:2px;left:0;width:16px;height:16px;border-radius:50%;background:var(--night);border:2px solid var(--w-55)}
-.endx .stop.now::before{z-index:1;background:#8FAEFF;border-color:#8FAEFF;box-shadow:0 0 0 6px rgba(143,174,255,.18),0 0 14px 4px rgba(143,174,255,.7),0 0 34px 10px rgba(143,174,255,.35)}
-/* the shipped dot breathes: a ring that grows and fades */
-.endx .stop.now::after{content:"";position:absolute;top:2px;left:0;width:16px;height:16px;border-radius:50%;background:#8FAEFF;animation:shipped 2.4s cubic-bezier(.22,1,.36,1) infinite}
-@keyframes shipped{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.8);opacity:0}}
+/* the shipped dot, as in the app's pipeline stage marker: cobalt disc, white centre, soft halo */
+.endx .stop.now::before{z-index:1;top:-1px;left:-3px;width:22px;height:22px;border:0;box-sizing:border-box;background:radial-gradient(circle,#fff 0 29%,#3B63F0 32%);box-shadow:0 0 14px 5px rgba(175,198,255,.55),0 0 34px 14px rgba(105,140,255,.32)}
 .endx .stop.nx::before{background:var(--apricot);border-color:var(--apricot)}
 .endx .stop .lbl{color:var(--w-55)}
 .endx .stop b{display:block;font-size:18px;letter-spacing:-.015em;margin-top:6px}
@@ -718,11 +824,11 @@ a{color:inherit}
 @media (max-width:899.98px){
   .endx .rows{grid-template-columns:1fr 1fr}.endx .rows div:nth-child(3){padding-left:0;border-left:0}.endx .rows div:nth-child(n+3){border-top:1px solid var(--w-line)}
   .endx .road{grid-template-columns:1fr;gap:26px}.endx .road::before{left:7px;right:auto;top:0;bottom:0;width:2px;height:auto;background:linear-gradient(180deg,#8FAEFF,var(--apricot) 55%,var(--w-line))}
-  .endx .stop{padding-top:0;padding-left:34px}.endx .stop::before,.endx .stop.now::after{top:3px}
+  .endx .stop{padding-top:0;padding-left:34px}.endx .stop::before{top:3px}.endx .stop.now::before{top:0}
   .endx .tl{font-size:12px;padding:7px 10px 7px 7px}.endx .tl i{width:18px;height:18px}
 }
 @media (max-width:519.98px){.endx .rows{grid-template-columns:1fr}.endx .rows div + div{padding-left:0;border-left:0;border-top:1px solid var(--w-line)}}
-@media (prefers-reduced-motion:reduce){.endx .rv{opacity:1;transform:none;transition:none}.endx .stop.now::after{animation:none;opacity:0}}
+@media (prefers-reduced-motion:reduce){.endx .rv{opacity:1;transform:none;transition:none}}
 
 .endx{position:relative;z-index:2;color:#fff;background:#0F1F6B}
 </style>
@@ -877,6 +983,212 @@ a{color:inherit}
     </div>
   </div>
 </section>
+<section class="uxwork" id="uxwork" aria-labelledby="uw-h">
+  <div class="wrap">
+    <div class="grid">
+      <div class="ab-title">
+        <div class="row"><span class="no">03</span><h2 id="uw-h">The UX work</h2></div>
+        <span class="bar" aria-hidden="true"></span>
+      </div>
+      <div class="uw-body">
+        <p class="uw-lead rv">The structure went through two real shapes before it answered the RM's four questions.</p>
+        <p class="copy rv">I shadowed five RMs, timed every switch between apps, and turned their day into an information architecture. The first version failed in testing, in a useful way. The second one became Nested.</p>
+      </div>
+    </div>
+
+    <div class="uw-rail" id="uwRail">
+      <ol class="uw-steps">
+
+        <!-- 01 · Research: field notes -->
+        <li class="uw-step">
+          <div class="uw-vis"><figure class="uw-art" role="img" aria-label="Field notes from a shadowing session. Field notes from one RM's morning. Five apps and 51 minutes before the first call.">
+            <svg viewBox="0 0 300 340" aria-hidden="true">
+              <rect x="0" y="0" width="300" height="340" rx="12" fill="#fff"/>
+              <g font-family="Geist Mono,ui-monospace,monospace" font-size="9" fill="#6B707C" letter-spacing=".4">
+                <text x="26" y="36">FIELD NOTES · RM 03</text>
+                <text x="274" y="36" text-anchor="end">TUE · MORNING</text>
+              </g>
+              <line x1="26" y1="48" x2="274" y2="48" stroke="#E3E6EC"/>
+              <line x1="66" y1="68" x2="66" y2="188" stroke="#E3E6EC" stroke-width="1.5"/>
+              <g font-family="Geist Mono,ui-monospace,monospace" font-size="9.5" fill="#9AA0AC">
+                <text x="26" y="73">09:40</text><text x="26" y="103">09:52</text><text x="26" y="133">10:05</text><text x="26" y="163">10:18</text><text x="26" y="193">10:31</text>
+              </g>
+              <g fill="#fff" stroke="#9AA0AC" stroke-width="1.5">
+                <circle cx="66" cy="70" r="4"/><circle cx="66" cy="100" r="4"/><circle cx="66" cy="130" r="4"/><circle cx="66" cy="160" r="4"/>
+              </g>
+              <circle cx="66" cy="190" r="4.5" fill="#2A63F2"/>
+              <g font-family="Geist,system-ui,sans-serif" font-size="11" fill="#0B0B0C">
+                <text x="80" y="74">Opens WhatsApp · 46 unread</text>
+                <text x="80" y="104">Sheets for the lead's status</text>
+                <text x="80" y="134">Asks a colleague about the call</text>
+                <text x="80" y="164">Excel for the incentive slab</text>
+                <text x="80" y="194" font-weight="600" fill="#2A63F2">First call of the day</text>
+              </g>
+              <rect x="26" y="210" width="96" height="22" rx="11" fill="#FFF6E0"/>
+              <rect x="128" y="210" width="134" height="22" rx="11" fill="#FFF6E0"/>
+              <g font-family="Geist Mono,ui-monospace,monospace" font-size="9" fill="#9A6700" letter-spacing=".3">
+                <text x="74" y="224.5" text-anchor="middle">5 APPS OPENED</text>
+                <text x="195" y="224.5" text-anchor="middle">51 MIN TO FIRST CALL</text>
+              </g>
+              <rect x="26" y="246" width="248" height="62" rx="8" fill="#EEF4FF"/>
+              <rect x="26" y="246" width="3" height="62" fill="#2A63F2"/>
+              <g font-family="Geist,system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#0B0B0C">
+                <text x="40" y="267">“By the time I know who to call,</text>
+                <text x="40" y="282">the lead has already spoken to</text>
+                <text x="40" y="297">someone else.”</text>
+              </g>
+            </svg>
+          </figure></div>
+          <div class="uw-txt"><h3>Shadowed RMs through full shifts</h3>
+          <p>Five RMs, two offices. Every switch between apps got a timestamp.</p>
+          <p class="learn">The tools weren't the problem. The missing structure between them was.</p></div>
+        </li>
+
+        <!-- 02 · IA v1: grouped by data source -->
+        <li class="uw-step">
+          <div class="uw-vis"><figure class="uw-art" role="img" aria-label="First information architecture, grouped by data source. IA v1 mirrored the old tools. The same lead ended up in three branches.">
+            <svg viewBox="0 0 300 340" aria-hidden="true">
+              <rect x="0" y="0" width="300" height="340" rx="12" fill="#fff"/>
+              <text x="16" y="28" font-family="Geist Mono,ui-monospace,monospace" font-size="9" fill="#6B707C" letter-spacing=".4">IA V1 · GROUPED BY DATA SOURCE</text>
+              <path d="M150 66v14M38 80h224M38 80v12M112 80v12M188 80v12M262 80v12" fill="none" stroke="#C9CDD6" stroke-width="1.3"/>
+              <path d="M38 126v50M112 126v50M188 126v76M262 126v50" fill="none" stroke="#E3E6EC" stroke-width="1.3"/>
+              <rect x="120" y="42" width="60" height="24" rx="6" fill="#fff" stroke="#9AA0AC"/>
+              <text x="150" y="58" text-anchor="middle" font-family="Geist,system-ui,sans-serif" font-size="10.5" font-weight="600" fill="#0B0B0C">Home</text>
+              <g fill="#fff" stroke="#9AA0AC"><rect x="6" y="92" width="64" height="34" rx="6"/><rect x="80" y="92" width="64" height="34" rx="6"/><rect x="156" y="92" width="64" height="34" rx="6"/><rect x="230" y="92" width="64" height="34" rx="6"/></g>
+              <g font-family="Geist,system-ui,sans-serif" font-size="10" font-weight="600" fill="#0B0B0C" text-anchor="middle">
+                <text x="38" y="107">Leads</text><text x="112" y="107">Chats</text><text x="188" y="107">Incentives</text><text x="262" y="107">Visits</text>
+              </g>
+              <g font-family="Geist Mono,ui-monospace,monospace" font-size="7.5" fill="#9AA0AC" text-anchor="middle" letter-spacing=".3">
+                <text x="38" y="119">SHEETS</text><text x="112" y="119">WHATSAPP</text><text x="188" y="119">EXCEL</text><text x="262" y="119">CALENDAR</text>
+              </g>
+              <g fill="#F4F5F7">
+                <rect x="8" y="140" width="60" height="20" rx="4"/>
+                <rect x="82" y="140" width="60" height="20" rx="4"/>
+                <rect x="158" y="140" width="60" height="20" rx="4"/><rect x="158" y="166" width="60" height="20" rx="4"/><rect x="158" y="192" width="60" height="20" rx="4"/>
+                <rect x="232" y="140" width="60" height="20" rx="4"/>
+              </g>
+              <g fill="#FFF6E0" stroke="#9A6700" stroke-width="1.1"><rect x="8" y="166" width="60" height="20" rx="4"/><rect x="82" y="166" width="60" height="20" rx="4"/><rect x="232" y="166" width="60" height="20" rx="4"/></g>
+              <g font-family="Geist,system-ui,sans-serif" font-size="8.5" fill="#4B505B" text-anchor="middle">
+                <text x="38" y="153">All leads</text>
+                <text x="112" y="153">Inbox</text>
+                <text x="188" y="153">Slabs</text><text x="188" y="179">Payouts</text><text x="188" y="205">Disputes</text>
+                <text x="262" y="153">Today</text>
+              </g>
+              <g font-family="Geist,system-ui,sans-serif" font-size="8.5" font-weight="600" fill="#9A6700" text-anchor="middle">
+                <text x="38" y="179">Ananya I.</text><text x="112" y="179">Ananya I.</text><text x="262" y="179">Ananya I.</text>
+              </g>
+              <path d="M38 186C46 226 104 226 112 186M112 186C130 244 244 244 262 186" fill="none" stroke="#9A6700" stroke-width="1.3" stroke-dasharray="3 3"/>
+              <rect x="16" y="258" width="268" height="62" rx="8" fill="#FFF6E0"/>
+              <text x="30" y="276" font-family="Geist Mono,ui-monospace,monospace" font-size="8.5" fill="#9A6700" letter-spacing=".4">PROBLEM</text>
+              <text x="30" y="293" font-family="Geist,system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#0B0B0C">One lead lives in three places.</text>
+              <text x="30" y="309" font-family="Geist,system-ui,sans-serif" font-size="10" fill="#4B505B">The RM still stitches the story together.</text>
+            </svg>
+          </figure></div>
+          <div class="uw-txt"><h3>Grouped the app by data source</h3>
+          <p>Leads from Sheets, chats from WhatsApp, incentives from Excel, visits from Calendar. One app, same four silos.</p>
+          <p class="learn">One lead ended up in three branches.</p></div>
+        </li>
+
+        <!-- 03 · Testing -->
+        <li class="uw-step">
+          <div class="uw-vis"><figure class="uw-art" role="img" aria-label="Usability test findings on the tabbed prototype. Moderated tests on a clickable prototype, mid-shift. The tab bar broke live calls.">
+            <svg viewBox="0 0 300 340" aria-hidden="true">
+              <rect x="0" y="0" width="300" height="340" rx="12" fill="#fff"/>
+              <text x="16" y="28" font-family="Geist Mono,ui-monospace,monospace" font-size="9" fill="#6B707C" letter-spacing=".4">MODERATED TEST · 5 RMS · PROTOTYPE</text>
+              <rect x="16" y="44" width="120" height="280" rx="18" fill="#fff" stroke="#9AA0AC"/>
+              <rect x="58" y="52" width="36" height="5" rx="2.5" fill="#E3E6EC"/>
+              <text x="28" y="80" font-family="Geist,system-ui,sans-serif" font-size="12" font-weight="700" fill="#0B0B0C">Leads</text>
+              <rect x="28" y="88" width="96" height="14" rx="7" fill="#F4F5F7"/>
+              <rect x="24" y="110" width="104" height="34" rx="7" fill="#EEF4FF"/>
+              <circle cx="40" cy="127" r="9" fill="#C8D8FF"/>
+              <text x="55" y="124" font-family="Geist,system-ui,sans-serif" font-size="9.5" font-weight="600" fill="#0B0B0C">Ananya I.</text>
+              <text x="55" y="136" font-family="Geist Mono,ui-monospace,monospace" font-size="7.5" fill="#2A63F2">ON CALL · 02:14</text>
+              <g fill="#ECEEF2"><circle cx="40" cy="165" r="9"/><circle cx="40" cy="199" r="9"/><circle cx="40" cy="233" r="9"/></g>
+              <g fill="#E3E6EC"><rect x="55" y="159" width="58" height="6" rx="3"/><rect x="55" y="193" width="50" height="6" rx="3"/><rect x="55" y="227" width="56" height="6" rx="3"/></g>
+              <g fill="#F1F2F4"><rect x="55" y="169" width="38" height="5" rx="2.5"/><rect x="55" y="203" width="44" height="5" rx="2.5"/><rect x="55" y="237" width="34" height="5" rx="2.5"/></g>
+              <line x1="16" y1="286" x2="136" y2="286" stroke="#E3E6EC"/>
+              <g fill="#ECEEF2"><rect x="30" y="296" width="12" height="12" rx="3"/><rect x="84" y="296" width="12" height="12" rx="3"/><rect x="110" y="296" width="12" height="12" rx="3"/></g>
+              <rect x="57" y="296" width="12" height="12" rx="3" fill="#9A6700"/>
+              <circle cx="63" cy="302" r="11" fill="none" stroke="#9A6700" stroke-width="1.3"/>
+              <circle cx="63" cy="302" r="17" fill="none" stroke="#9A6700" stroke-opacity=".35"/>
+              <path d="M110 146C124 200 80 238 66 280" fill="none" stroke="#9A6700" stroke-width="1.3" stroke-dasharray="3 3"/>
+              <path d="M62 274l4 7 5-6" fill="none" stroke="#9A6700" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="88" y="262" font-family="Geist Mono,ui-monospace,monospace" font-size="7.5" fill="#9A6700">TAB SWITCH</text>
+              <text x="88" y="272" font-family="Geist Mono,ui-monospace,monospace" font-size="7.5" fill="#9A6700">MID-CALL</text>
+              <rect x="148" y="44" width="138" height="80" rx="8" fill="#FFF6E0"/>
+              <text x="160" y="76" font-family="Geist,system-ui,sans-serif" font-size="22" font-weight="700" fill="#9A6700">3/5</text>
+              <text x="160" y="96" font-family="Geist,system-ui,sans-serif" font-size="9.5" fill="#0B0B0C">switched tabs mid-call</text>
+              <text x="160" y="110" font-family="Geist,system-ui,sans-serif" font-size="9.5" fill="#0B0B0C">and lost the lead's context</text>
+              <rect x="148" y="132" width="138" height="80" rx="8" fill="#FFF6E0"/>
+              <text x="160" y="164" font-family="Geist,system-ui,sans-serif" font-size="22" font-weight="700" fill="#9A6700">4/5</text>
+              <text x="160" y="184" font-family="Geist,system-ui,sans-serif" font-size="9.5" fill="#0B0B0C">asked “where's my</text>
+              <text x="160" y="198" font-family="Geist,system-ui,sans-serif" font-size="9.5" fill="#0B0B0C">incentive?” in two minutes</text>
+              <rect x="148" y="220" width="138" height="104" rx="8" fill="#EEF4FF"/>
+              <text x="160" y="240" font-family="Geist Mono,ui-monospace,monospace" font-size="8.5" fill="#2A63F2" letter-spacing=".4">CHANGE</text>
+              <text x="160" y="259" font-family="Geist,system-ui,sans-serif" font-size="12" font-weight="700" fill="#0B0B0C">No tabs.</text>
+              <text x="160" y="277" font-family="Geist,system-ui,sans-serif" font-size="9.5" fill="#4B505B">One scrolling day,</text>
+              <text x="160" y="291" font-family="Geist,system-ui,sans-serif" font-size="9.5" fill="#4B505B">ordered by what to</text>
+              <text x="160" y="305" font-family="Geist,system-ui,sans-serif" font-size="9.5" fill="#4B505B">do next.</text>
+            </svg>
+          </figure></div>
+          <div class="uw-txt"><h3>Tested it with RMs, mid-shift</h3>
+          <p>A clickable prototype, real leads on the line. I watched where thumbs went and what got asked out loud.</p>
+          <p class="learn">Tabs broke live calls. Incentives were the first thing anyone looked for.</p></div>
+        </li>
+
+        <!-- 04 · IA v2: grouped by question -->
+        <li class="uw-step">
+          <div class="uw-vis"><figure class="uw-art" role="img" aria-label="Final information architecture, grouped by the RM's questions. IA v2, grouped by the four questions from the challenge. Each lead is one record that every section links to.">
+            <svg viewBox="0 0 300 340" aria-hidden="true">
+              <rect x="0" y="0" width="300" height="340" rx="12" fill="#fff"/>
+              <text x="16" y="28" font-family="Geist Mono,ui-monospace,monospace" font-size="9" fill="#6B707C" letter-spacing=".4">IA V2 · GROUPED BY THE RM'S QUESTION</text>
+              <path d="M150 66v14M38 80h224M38 80v12M112 80v12M188 80v12M262 80v12" fill="none" stroke="#B9CBFA" stroke-width="1.3"/>
+              <path d="M38 126v60M112 126v60M188 126v60M262 126v60" fill="none" stroke="#DDE6FF" stroke-width="1.3"/>
+              <rect x="120" y="42" width="60" height="24" rx="6" fill="#2A63F2"/>
+              <text x="150" y="58" text-anchor="middle" font-family="Geist,system-ui,sans-serif" font-size="10.5" font-weight="600" fill="#fff">Today</text>
+              <g fill="#EEF4FF" stroke="#2A63F2"><rect x="6" y="92" width="64" height="34" rx="6"/><rect x="80" y="92" width="64" height="34" rx="6"/><rect x="156" y="92" width="64" height="34" rx="6"/><rect x="230" y="92" width="64" height="34" rx="6"/></g>
+              <g font-family="Geist,system-ui,sans-serif" font-size="10" font-weight="600" fill="#2A63F2" text-anchor="middle">
+                <text x="38" y="107">Dashboard</text><text x="112" y="107">Pipeline</text><text x="188" y="107">Earnings</text><text x="262" y="107">Comms</text>
+              </g>
+              <g font-family="Geist,system-ui,sans-serif" font-size="7" fill="#4B505B" text-anchor="middle">
+                <text x="38" y="119">How am I doing?</text><text x="112" y="119">Who's next?</text><text x="188" y="119">What do I earn?</text><text x="262" y="119">What happened?</text>
+              </g>
+              <g fill="#F4F5F7">
+                <rect x="8" y="140" width="60" height="20" rx="4"/><rect x="8" y="166" width="60" height="20" rx="4"/>
+                <rect x="82" y="166" width="60" height="20" rx="4"/>
+                <rect x="158" y="140" width="60" height="20" rx="4"/><rect x="158" y="166" width="60" height="20" rx="4"/>
+                <rect x="232" y="140" width="60" height="20" rx="4"/><rect x="232" y="166" width="60" height="20" rx="4"/>
+              </g>
+              <rect x="82" y="140" width="60" height="20" rx="4" fill="#2A63F2"/>
+              <g font-family="Geist,system-ui,sans-serif" font-size="8.5" fill="#4B505B" text-anchor="middle">
+                <text x="38" y="153">Targets</text><text x="38" y="179">Visits</text>
+                <text x="112" y="179">Next call</text>
+                <text x="188" y="153">This month</text><text x="188" y="179">Payout</text>
+                <text x="262" y="153">Thread</text><text x="262" y="179">Notes</text>
+              </g>
+              <text x="112" y="153" text-anchor="middle" font-family="Geist,system-ui,sans-serif" font-size="8.5" font-weight="600" fill="#fff">Ananya I.</text>
+              <path d="M68 176C78 176 72 150 82 150" fill="none" stroke="#2A63F2" stroke-width="1.3"/>
+              <path d="M262 140V133H124V140" fill="none" stroke="#2A63F2" stroke-width="1.3"/>
+              <g fill="#2A63F2"><circle cx="82" cy="150" r="2.2"/><circle cx="124" cy="140" r="2.2"/></g>
+              <text x="150" y="214" text-anchor="middle" font-family="Geist Mono,ui-monospace,monospace" font-size="7.5" fill="#2A63F2" letter-spacing=".3">LINKS, NOT COPIES</text>
+              <rect x="16" y="250" width="268" height="72" rx="8" fill="#EEF4FF"/>
+              <text x="30" y="268" font-family="Geist Mono,ui-monospace,monospace" font-size="8.5" fill="#2A63F2" letter-spacing=".4">RETEST</text>
+              <text x="30" y="285" font-family="Geist,system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#0B0B0C">One lead, one record.</text>
+              <text x="30" y="301" font-family="Geist,system-ui,sans-serif" font-size="10" fill="#4B505B">5 of 5 RMs found their incentive</text>
+              <text x="30" y="314" font-family="Geist,system-ui,sans-serif" font-size="10" fill="#4B505B">in under ten seconds.</text>
+            </svg>
+          </figure></div>
+          <div class="uw-txt"><h3>Regrouped by the question being asked</h3>
+          <p>Each section answers one of the four questions from the challenge. A lead lives in one place, and everything else links to it.</p>
+          <p class="learn">Retest: every RM found their incentive in under ten seconds.</p></div>
+        </li>
+      </ol>
+    </div>
+
+    <p class="uw-close rv">Two maps. <b>One</b> that matched how an RM actually thinks.</p>
+    <p class="uw-note rv">Artifacts recreated for this case study. Names and numbers changed.</p>
+  </div>
+</section>
 <section class="sol" id="solution" aria-labelledby="sol-h">
   <div class="pin">
     <div class="sky" aria-hidden="true"></div><div class="endblue" aria-hidden="true"></div><span class="grain" aria-hidden="true"></span>
@@ -921,7 +1233,7 @@ a{color:inherit}
     <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
   </svg>
 
-  <h2 class="sr-only" id="ft-h">03 · The solution: four features, one working day</h2>
+  <h2 class="sr-only" id="ft-h">04 · The solution: four features, one working day</h2>
 
   <!-- 1 · Dashboard: image left, text right -->
   <section class="fs wrap" aria-labelledby="f1-h">
@@ -1065,7 +1377,7 @@ a{color:inherit}
   <section class="fs fs-center" aria-labelledby="f5-h">
   <div class="wrap">
     <div class="fs-copy rv">
-      <div class="sec-t c"><div class="row"><span class="no">04</span><h2 id="f5-h">Design system</h2></div><span class="bar" aria-hidden="true"></span></div>
+      <div class="sec-t c"><div class="row"><span class="no">05</span><h2 id="f5-h">Design system</h2></div><span class="bar" aria-hidden="true"></span></div>
       <h3 class="lead-t">One system behind every screen.</h3>
       <p>Two type families, six colours, a temperature scale that reads without colour, and one rule for AI: always show why.</p>
     </div>
@@ -1086,6 +1398,24 @@ a{color:inherit}
       <div class="ac tabbar"><span class="on"><svg class="ic"><use href="#i-home"/></svg>Today</span><span><svg class="ic"><use href="#i-layers"/></svg>Pipeline</span><span><svg class="ic"><use href="#i-wallet"/></svg>Earnings</span></div>
       <span class="chip hot"><span class="mk"></span>Hot</span><span class="chip warm"><span class="mk"></span>Warm</span>
     </div>
+    <div class="row" data-dir="-1">
+      <span class="chip pendg"><span class="mk"></span>Pending · 1 of 2 signals</span><span class="toast"><span class="tk">✓</span>Call logged · voice note transcribed</span>
+      <div class="ac draft"><div class="hdr"><span class="ap"><svg><use href="#i-chat"/></svg></span>WhatsApp draft<span class="ns">AI · not sent</span></div><p>Hi Ananya, yes, the 20:80 plan applies on the 1 BHK at Greenfield Park.</p><div class="b"><span class="btn sec sm">Edit</span><span class="btn pri sm">Send</span></div></div>
+      <div class="ac aisg"><div class="hdr"><svg class="ic"><use href="#i-spark"/></svg>AI suggestion · High confidence<span class="conf"><i></i><i></i><i></i></span></div><p>Call Priya before 4:30 PM. She replies fastest in the late afternoon.</p><a>Why this? <svg class="ic"><use href="#i-chev"/></svg></a></div>
+      <span class="sg"><b class="st s">Strong</b><b class="st m">Medium</b><b class="st w">Weak</b></span><span class="cf"><span>High<span class="conf"><i></i><i></i><i></i></span></span><span>Medium<span class="conf"><i></i><i></i><i class="o"></i></span></span><span>Low<span class="conf"><i></i><i class="o"></i><i class="o"></i></span></span></span>
+      <span class="chip pendg"><span class="mk"></span>Pending · 1 of 2 signals</span><span class="toast"><span class="tk">✓</span>Call logged · voice note transcribed</span>
+    </div>
+    <div class="row" data-dir="1">
+      <span class="rbs"><span class="rb call"><svg><use href="#i-phone"/></svg></span><span class="rb wa"><svg><use href="#i-chat"/></svg></span><span class="rb go"><svg><use href="#i-nav"/></svg></span></span>
+      <span class="seg"><span class="on">Today<b>4</b></span><span>New<b>2</b></span><span>Overdue<b>2</b></span></span>
+      <div class="ac stp"><div class="stdots"><i class="d"></i><i class="d"></i><i class="c"></i><i></i><i></i></div><div class="lb"><span>New</span><span>Opportunity</span><span class="on">Visit</span><span>Negotiation</span><span>Booked</span></div></div>
+      <div class="ac gauge"><svg viewBox="0 0 120 66" aria-hidden="true"><path d="M12 60a48 48 0 0 1 96 0" fill="none" stroke="#ECE6DD" stroke-width="10" stroke-linecap="round"/><path d="M12 60a48 48 0 0 1 96 0" fill="none" stroke="#C9A43E" stroke-width="10" stroke-linecap="round" stroke-dasharray="90.5 200"/></svg><b>3<small> of 5</small></b><span>Eligible · since 10 Oct</span></div>
+      <span class="srch"><svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>Search leads, projects…</span>
+      <span class="tok rad"><i style="border-radius:6px"></i><i style="border-radius:12px"></i><i style="border-radius:18px"></i><i style="border-radius:999px"></i><small>Radius 6 · 12 · 18 · full</small></span>
+      <span class="ac tg">Remind me before callbacks<i class="sw"></i></span>
+      <span class="av"><i>RM</i><i>PN</i><i>AK</i><b>+3 on this lead</b></span>
+      <span class="tok spc"><i style="width:4px"></i><i style="width:8px"></i><i style="width:12px"></i><i style="width:16px"></i><i style="width:24px"></i><i style="width:32px"></i><small>Space 4 → 32</small></span>
+    </div>
   </div>
     </div>
   </section>
@@ -1095,7 +1425,7 @@ a{color:inherit}
   <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-sp" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.7 1.8 1.8.7-1.8.7L19 20l-.7-1.8-1.8-.7 1.8-.7z"/></symbol></svg>
   <div class="pin"><div class="wrap grid">
     <div>
-      <div class="sec-t"><div class="row"><span class="no">05</span><h2 id="ai-h">The AI layer</h2></div><span class="bar" aria-hidden="true"></span></div>
+      <div class="sec-t"><div class="row"><span class="no">06</span><h2 id="ai-h">The AI layer</h2></div><span class="bar" aria-hidden="true"></span></div>
       <h3 class="lead-t">From signal to suggestion, in five layers.</h3>
       <p class="intro">Every AI moment in Nested follows the same rules, so RMs learn when to trust it and when to check.</p>
       <ol class="acc" id="acc">
@@ -1130,7 +1460,7 @@ a{color:inherit}
       <div class="rv"><b>Visible incentives</b>Built up and confirmed, all month.</div>
       <div class="rv"><b>Full context</b>Every channel, every RM, before every call.</div>
     </div>
-    <div class="sh rv"><div class="sec-t"><div class="row"><span class="no">07</span><h2>Next steps</h2></div><span class="bar" aria-hidden="true"></span></div><h3 class="lead-t">Where I'd take it next.</h3><p>Nested v1 covers the RM's day. These are the two things I'd build after it.</p></div>
+    <div class="sh rv"><div class="sec-t"><div class="row"><span class="no">08</span><h2>Next steps</h2></div><span class="bar" aria-hidden="true"></span></div><h3 class="lead-t">Where I'd take it next.</h3><p>Nested v1 covers the RM's day. These are the two things I'd build after it.</p></div>
     <div class="road rv">
       <div class="stop now"><span class="lbl">Shipped</span><b>Nested v1</b><span>Daily Brief, Pipeline, Earnings and Conversations.</span></div>
       <div class="stop nx"><span class="lbl">Next</span><b>Hands-free</b><span>Voice-first logging and lookups for RMs in cars and on site.</span></div>
@@ -1463,6 +1793,22 @@ a{color:inherit}
   if (!('IntersectionObserver' in window) || reduce){ els.forEach(function(e){ e.classList.add('in'); }); return; }
   var io = new IntersectionObserver(function(en){ en.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.2});
   els.forEach(function(e){ io.observe(e); });
+})();
+
+/* ---------- The UX work: reveal the steps ---------- */
+(function(){
+  'use strict';
+  var sec = document.getElementById('uxwork');
+  if (!sec) return;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var els = [sec].concat([].slice.call(sec.querySelectorAll('.rv, .uw-step')));
+  if (!('IntersectionObserver' in window) || reduce){ els.forEach(function(e){ e.classList.add('in'); }); }
+  else {
+    var io = new IntersectionObserver(function(en){ en.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.15});
+    els.forEach(function(e){ io.observe(e); });
+  }
+
 })();
 
 /* ---------- 03 · challenge -> solution scroll scene ---------- */
