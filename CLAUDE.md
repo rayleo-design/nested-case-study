@@ -1,30 +1,35 @@
 # Nested case study: notes for Claude Code
 
 ## What this is
-A single-page, scroll-driven portfolio case study. Everything (HTML, CSS, JS) is in `index.html`; the only external files are `assets/phone-hero.webp` (hero render) and `assets/phone-brief.webp` (Daily Brief render, used in the solution scene and Dashboard). Fonts load from Google Fonts. No framework, no build step.
+A single-page, scroll-driven portfolio case study. Everything (HTML, CSS, JS) is in `index.html`; the only external files are `assets/phone-hero.webp` (hero render; also the source of the 3D phone's screen texture), `assets/phone-brief.webp` (Daily Brief render, used in the solution scene and Dashboard), `assets/phone-pipeline.webp` and `assets/phone-conversation.webp` (real app screenshots shown inside the CSS phone frame in Pipeline and Communication) and `assets/iphone14/` (the site's 3D phone, glTF + textures). Fonts load from Google Fonts; three.js 0.169.0 loads from jsDelivr via an import map, for the hero only. No framework, no build step.
 
 ## Page order (top to bottom)
-1. **Hero** (`#top`, dark): phone balancing on its bottom-left corner; drag spins it around that corner. "Start the day" scrolls to the floating phone in the solution scene.
+1. **Hero** (`#top`, dark): a real 3D iPhone 14 Pro (three.js, `assets/iphone14/scene.gltf`; its screen triangles are split out at load and given the app UI) balancing on its bottom-left corner; drag spins it around that corner. Both 3D phones come from one shared module at the end of `index.html` (model loaded once, one canvas each). The spin physics live in the hero IIFE and drive the model through `window.__phone3d.draw(phi, lean, w)`; the old CSS phone stays as the fallback if WebGL or the CDN fails (2.5s timeout). On load it starts side-on (left edge towards the viewer, screen turned away) and turns smoothly to face front. The "Drag to spin" hint's arrow starts at the tipping corner; it hides while the phone is being spun and returns a few seconds after it settles. "Skip to results" jumps to `#ending`. On desktop the phone stands on the pedestal right beside the headline (`--px:47%`, `--py:88%`), with the caption beside its lower-right corner, as in the k.no.b keyboard reference.
 2. **01 · About the project** (`#next`): light sheet that slides over the hero (curtain).
 3. **Before-state** (`#before`): pinned scene, the RM with eight tools around him.
-4. **The challenge** (`#challenge`): unnumbered; quote and four questions.
-5. **Challenge → solution scene** (`#solution`): pinned; blur-swap text, phone rises, tilts, three pills, flies out, background dissolves to cream.
-6. **02 · The solution** (`#features`): Dashboard, Lead pipeline, Incentives (pinned gauge, `#earn`), Communication (`#comm`), with line-diamond-line dividers. Feature labels are NOT numbered.
-7. **03 · Design system** (`#dsc`): three rows that slide on scroll.
-8. **04 · The AI layer** (`#ai`): pinned five-layer isometric stack with an accordion.
-9. **05 · Results / 06 · Next steps** (`#ending`): evening sky, 8 tools collapse into 1, then results, roadmap, thanks, footer on night blue.
+4. **02 · The challenge** (`#challenge`): quote and four questions (no category labels).
+5. **Challenge → solution scene** (`#solution`): pinned; starts half a screen early (the pin is held at the top and the blue fades in over the end of the challenge), blur-swap text, phone rises, tilts, three pills close around it, then it turns and straightens as it flies out while the background dissolves to cream; the features section (`.ft`, `margin-top:-38vh`) slides up over the end of the pinned scene so there is no empty cream gap. If you change the scene's height or timings, keep that overlap in step. The phone is the same 3D model (canvas `#sol3d`, screen from `phone-brief.webp`), driven by the scene IIFE through `window.__sol3d.draw(y, rx, ry, rz, s, pw)`; the CSS phone `#ph3` is the fallback.
+6. **03 · The solution** (`#features`): no visible intro (the 03 label and heading are screen-reader only); starts straight on Dashboard, Lead pipeline (screenshot in the phone, the Lead Score sheet split into three floating cards on its left), Incentives (pinned gauge, `#earn`), Communication (`#comm`, screenshot in the phone, white channel cards with gray header/footer bars). Line-diamond-line dividers sit between the features and stop before Design system; there is none after it. Feature labels are NOT numbered (mono, 13px, semibold).
+7. **04 · Design system** (`#dsc`): three rows that slide on scroll.
+8. **05 · The AI layer** (`#ai`): pinned five-layer isometric stack with an accordion.
+9. **06 · Results / 07 · Next steps** (`#ending`): evening sky, 8 tools collapse into 1, then results, roadmap, thanks, footer on night blue.
 
 ## Conventions
-- Section numbering is exactly 01 About, 02 Solution, 03 Design system, 04 AI layer, 05 Results, 06 Next steps. Keep it that way unless asked.
+- Section numbering is exactly 01 About, 02 Challenge, 03 Solution, 04 Design system, 05 AI layer, 06 Results, 07 Next steps. Keep it that way unless asked.
 - Each section's CSS is grouped and commented in the `<style>` block; JS for each section is its own IIFE at the bottom. Scroll scenes read progress from the section's `getBoundingClientRect()` and are throttled with `requestAnimationFrame`.
 - Animate only `transform`, `opacity` and `filter`. Every scene has a `prefers-reduced-motion` fallback; keep it.
-- Breakpoints used: 480, 768, 900, 1024. Test at 390 and 1440 wide; there must be no horizontal scroll.
-- Two type systems on purpose: site copy is Plus Jakarta Sans (+ Roboto Serif in the hero); anything that is a piece of the app UI uses the app's fonts (Geist, Familjen Grotesk, Geist Mono).
+- Breakpoints used: 480, 768, 900, 1024. While work is in progress, verify at 1440 only; mobile (390) checks and fixes are batched in `later.md` before pushing. There must be no horizontal scroll.
+- One type scale everywhere: section title ~25px, lead ~21px, body 16px, details 14–15px; feature headings ~26px; the RM quote (~29px) is the one larger line. Sections 04, 05 and 07 use the same title block as 01/02; 06 Results shows only the word "Results" (no number, no bar) (`.sec-t`: mono number, bold title, short bar), then a `.lead-t` line.
+- Two type systems on purpose: site copy is Plus Jakarta Sans, the hero headline included; anything that is a piece of the app UI uses the app's fonts (Geist, Familjen Grotesk, Geist Mono).
 - AI UI must match the product: "AI suggestion · <High|Medium|Low> confidence", confidence bars, "Why this?", signals marked Strong/Medium/Weak, Pending until 2 signals, drafts labelled "not sent".
 - Colours: cobalt `#2B4BE0` primary, apricot `#FFB98A` only for emphasis/Hot, amber `#9A6700` for Warm and warnings, cream `#F6F3EE` for the features, night `#0F1F6B` for the ending.
 
+- The 3D phone is "Iphone 14 Pro" by mister dude, CC BY 4.0 (`assets/iphone14/license.txt`). Use this model wherever the site shows a 3D phone. The credit in the footer is required; keep it.
+- `hero.html` is a test bench (hero only) for phone-model work; try changes there before porting them to `index.html`.
+- The 14 Pro model is quantized (`KHR_mesh_quantization`, ~1.2 MB geometry + 160 KB textures); the loader turns attributes back into floats before splitting the screen out. Unquantized originals are in `_scratch/iphone14-orig/` (local only). `later.md` holds the pre-push checklist.
+
 ## Known placeholders
-- Footer and "Next project / All work / Email / LinkedIn / Design system" links are `#`.
+- Closing links: "All work" (the one primary button) → https://manishray.com; footer Email → mailto:work.rayleo@gmail.com, LinkedIn → https://www.linkedin.com/in/manish-ray, Back to top → #top. There is no "Next project" button.
 - The challenge quote and its attribution are placeholders; replace with a real RM quote.
 - The hero phone render shows "Nallurhalli, Whitefield" (Bengaluru); the rest of the data is Mumbai/Thane.
 - Figures in Results (8 tools, ~30 min) come from the original case study.

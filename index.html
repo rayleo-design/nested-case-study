@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#060608">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&family=Plus+Jakarta+Sans:wght@500;700&family=Roboto+Serif:opsz,wdth,wght@8..144,50..150,300..500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap">
 <style>
 /* Nested case study · hero only.
    The phone balances on its bottom-left corner, leaning left, and can be dragged to tip around that point. */
@@ -76,24 +76,26 @@ a{color:inherit}
 .sheen{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.6;border-radius:17.5%/8.7%;
   background:linear-gradient(110deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.18) 46%,rgba(255,255,255,0) 60%);
   background-size:260% 100%;background-position:var(--shx,50%) 0}
+/* the real 3D phone (three.js). It overhangs the stage so the spin and lean never clip; the CSS model above stays as the fallback. */
+.gl3d{position:absolute;z-index:var(--z-device);left:-30%;top:-40%;width:160%;height:155%;pointer-events:none;opacity:0;transition:opacity .8s var(--ease)}
+.gl .gl3d{opacity:1}.ready.gl .model{opacity:0;transition-duration:.3s}
 .grab{position:absolute;z-index:calc(var(--z-device) + 1);left:var(--px);top:var(--py);width:calc(var(--w) * 1.5);height:calc(var(--w) * 2.05);transform:translate(-62%,-100%);cursor:grab;touch-action:pan-y;-webkit-tap-highlight-color:transparent;border-radius:24px}
 .grab.drag{cursor:grabbing}
 .grab:focus-visible{outline:2px dashed rgba(255,185,138,.6);outline-offset:4px}
-.hint{position:absolute;z-index:var(--z-copy);left:calc(var(--px) - 150px);top:calc(var(--py) + 14px);display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--on-dark-40);pointer-events:none;
+.hint{position:absolute;z-index:var(--z-copy);left:calc(var(--px) + 2px);top:calc(var(--py) + 4px);display:flex;align-items:flex-end;gap:6px;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--on-dark-40);pointer-events:none;
   opacity:0;transform:translateX(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
-.hint svg{width:30px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round}
-.ready .hint{opacity:1;transform:none;transition-delay:1.8s}
+.hint svg{width:44px;height:26px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ready .hint{opacity:1;transform:none;transition-delay:3s}
 .used .hint{opacity:0!important;transition-delay:0s!important}
 
 .text{position:relative;z-index:var(--z-copy);display:grid;gap:var(--sp-5);margin-top:var(--sp-5);padding-bottom:var(--sp-7)}
-.h{margin:0;font-family:var(--font-display);font-weight:300;font-variation-settings:'wdth' 50,'opsz' 144;font-size:clamp(3rem,1.6rem + 6vw,6.25rem);line-height:.92;letter-spacing:-.025em;max-width:8.2em;text-wrap:balance}
+.h{margin:0;font-family:var(--font-sans);font-weight:600;font-size:clamp(2.4rem,1.3rem + 2.6vw,3.75rem);line-height:1.04;letter-spacing:-.035em;max-width:9.5em;text-wrap:balance}
 .cta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-3) var(--sp-5)}
 .pill{display:inline-flex;align-items:center;gap:var(--sp-2);min-height:48px;padding:0 var(--sp-6);border-radius:999px;background:var(--apricot);color:var(--ink);font-weight:700;text-decoration:none;transition:transform .16s var(--ease),background .3s}
 .pill:hover{background:#FFC9A3}.pill:active{transform:scale(.97)}
-.pill svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.status{font-size:14px;color:var(--on-dark-64)}
-.status a{color:var(--blue-300)}
-.cap{position:relative;z-index:var(--z-copy);margin:0;font-size:14px;line-height:1.45;color:var(--on-dark-72);max-width:19rem}
+.pill{gap:10px;padding:0 var(--sp-5) 0 var(--sp-6)}
+.pill svg{flex:none;width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.cap{position:relative;z-index:var(--z-copy);margin:0;font-size:15px;line-height:1.55;color:var(--on-dark-72);max-width:24rem;text-wrap:pretty}
 .statement{position:relative;z-index:var(--z-copy);margin:0;font-family:var(--font-display);font-weight:300;font-variation-settings:'wdth' 62,'opsz' 72;font-size:clamp(1.9rem,1.1rem + 3.6vw,4.25rem);line-height:1.08;letter-spacing:-.015em;max-width:19em;padding-block:var(--sp-8) var(--sp-9);color:var(--on-dark)}
 .statement .a{color:var(--apricot)}.statement .b{color:var(--blue-300)}
 
@@ -102,13 +104,16 @@ a{color:inherit}
 @media (min-width:768px){.stage{--px:58%;--w:300px;height:clamp(540px,64svh,680px)}}
 @media (min-width:1024px){
   .hd{min-height:clamp(700px,calc(100svh - var(--nav-h)),940px)}
-  .stage{position:absolute;inset:0;height:auto;margin:0;--px:60%;--py:71%;--w:clamp(300px,25vw,380px)}
+  .stage{position:absolute;inset:0;height:auto;margin:0;--px:47%;--py:88%;--w:clamp(300px,25vw,380px)}
   .text{position:absolute;left:0;bottom:clamp(56px,11svh,120px);margin:0;padding:0;max-width:600px}
-  .cap{position:absolute;right:0;top:calc(71% + 24px);max-width:16rem}
-  .hint{top:calc(var(--py) - 90px);left:calc(var(--px) + var(--w) * .98)}
+  .cap{position:absolute;right:0;top:77%;max-width:22rem}
+  .hint span{line-height:1;transform:translateY(-1px)}
 }
 @media (max-width:1023.98px){.cap{margin-bottom:var(--sp-6)}}
-@media (prefers-reduced-motion:reduce){.model,.floor,.hint{transition:none}}
+/* wide screens: right:-30px offsets the caption's ragged right edge, so its longest line ends where the headline starts on the
+   other side (below 1280 the side margin is too small for it) */
+@media (min-width:1280px){.cap{right:-30px}}
+@media (prefers-reduced-motion:reduce){.model,.floor,.hint,.gl3d,.sol3d{transition:none}}
 
 /* placeholder for the next fold, to show the curtain */
 
@@ -130,26 +135,26 @@ a{color:inherit}
   box-shadow:0 -30px 80px rgba(0,0,0,.45);padding-block:clamp(72px,11vw,160px) clamp(80px,12vw,180px)}
 .about .grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--sp-6) clamp(32px,6vw,96px);align-items:start}
 .ab-title{position:sticky;top:calc(var(--nav-h) + 40px);display:flex;flex-direction:column;gap:14px}
-.ab-title .row{display:flex;align-items:baseline;gap:14px}
-.ab-title .no{font-family:var(--font-mono);font-size:14px;color:var(--l-ink-3)}
-.ab-title h2{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(28px,1.6rem + 1.4vw,44px);line-height:1.05;letter-spacing:-.025em}
-.ab-title .bar{display:block;width:56px;height:3px;border-radius:2px;background:var(--l-ink);transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease) .2s}
+.ab-title .row{display:flex;align-items:baseline;gap:12px}
+.ab-title .no{font-family:var(--font-mono);font-size:18px;color:var(--l-ink-3)}
+.ab-title h2{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(22px,1rem + .6vw,26px);line-height:1.1;letter-spacing:-.025em}
+.ab-title .bar{display:block;width:40px;height:3px;border-radius:2px;background:var(--l-ink);transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease) .2s}
 .about.in .ab-title .bar{transform:scaleX(1)}
-.ab-body{display:flex;flex-direction:column;gap:var(--sp-5);max-width:44rem}
-.lead{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(22px,1rem + 1.25vw,32px);line-height:1.28;letter-spacing:-.015em;color:var(--l-ink)}
+.ab-body{display:flex;flex-direction:column;gap:var(--sp-4);max-width:42rem}
+.lead{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(18px,.9rem + .45vw,22px);line-height:1.4;letter-spacing:-.012em;color:var(--l-ink)}
 .lead .w{color:var(--l-dim);transition:color .25s linear}
 .lead .w.on{color:var(--l-ink)}
 .lead .w.k.on{color:var(--l-blue)}
-.ab-body p.copy{margin:0;font-size:clamp(16px,.95rem + .25vw,18.5px);line-height:1.65;color:var(--l-ink-2)}
-.ab-body .nda{display:flex;gap:12px;align-items:flex-start;margin:0;padding:14px 16px;border-radius:14px;background:#F4F6FA;font-size:14px;line-height:1.5;color:var(--l-ink-3)}
-.ab-body .nda svg{flex:none;width:18px;height:18px;margin-top:1px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.meta{margin:var(--sp-5) 0 0;padding:0;display:grid}
-.meta .r{position:relative;display:grid;grid-template-columns:minmax(120px,2fr) minmax(0,3fr);gap:var(--sp-4);padding:20px 0;
+.ab-body p.copy{margin:0;font-size:16px;line-height:1.6;color:var(--l-ink-2)}
+.ab-body .nda{display:flex;gap:10px;align-items:flex-start;margin:var(--sp-2) 0 0;padding:12px 14px;border-radius:12px;background:#F4F6FA;font-size:13px;line-height:1.5;color:var(--l-ink-3)}
+.ab-body .nda svg{flex:none;width:16px;height:16px;margin-top:2px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.meta{margin:var(--sp-4) 0 0;padding:0;display:grid}
+.meta .r{position:relative;display:grid;grid-template-columns:minmax(120px,2fr) minmax(0,3fr);gap:var(--sp-4);padding:15px 0;
   opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
 .meta .r::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--l-line);transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease)}
 .meta .r:last-child::after{display:none}
-.meta dt{font-size:15px;color:var(--l-ink-3)}
-.meta dd{margin:0;font-size:15.5px;font-weight:700;color:var(--l-ink);line-height:1.45}
+.meta dt{font-size:14px;color:var(--l-ink-3)}
+.meta dd{margin:0;font-size:14px;font-weight:700;color:var(--l-ink);line-height:1.45}
 .meta dd .sep{color:var(--l-dim);margin:0 6px}
 .meta.in .r{opacity:1;transform:none}
 .meta.in .r::after{transform:scaleX(1)}
@@ -228,24 +233,24 @@ a{color:inherit}
 .challenge .ab-title .no{color:var(--c-ink-3)}
 .challenge .ab-title .bar{background:var(--c-ink)}
 .challenge.in .ab-title .bar{transform:scaleX(1)}
-.ch-body{display:flex;flex-direction:column;gap:var(--sp-5);max-width:46rem}
-.ch-lead{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(22px,1rem + 1.25vw,32px);line-height:1.28;letter-spacing:-.015em}
+.ch-body{display:flex;flex-direction:column;gap:var(--sp-4);max-width:42rem}
+.ch-lead{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(18px,.9rem + .45vw,22px);line-height:1.4;letter-spacing:-.012em}
 .ch-lead .w{color:#C9CDD6;transition:color .25s linear}.ch-lead .w.on{color:var(--c-ink)}
-.ch-body p.copy{margin:0;font-size:clamp(16px,.95rem + .25vw,18.5px);line-height:1.65;color:var(--c-ink-2)}
+.ch-body p.copy{margin:0;font-size:16px;line-height:1.6;color:var(--c-ink-2)}
 
-.quote{position:relative;margin:clamp(24px,4vw,48px) 0 clamp(16px,3vw,32px);padding:6px 0 6px clamp(20px,3vw,40px)}
+.quote{position:relative;margin:clamp(20px,3vw,36px) 0 clamp(12px,2vw,24px);padding:4px 0 4px clamp(18px,2.4vw,32px)}
 .quote::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px;background:var(--c-ink);transform:scaleY(0);transform-origin:top;transition:transform 1s var(--ease)}
 .quote.in::before{transform:scaleY(1)}
-.quote blockquote{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(26px,1.1rem + 2.3vw,48px);line-height:1.12;letter-spacing:-.03em;text-wrap:balance}
+.quote blockquote{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(22px,1rem + .9vw,29px);line-height:1.2;letter-spacing:-.025em;text-wrap:balance}
 .quote blockquote .w{display:inline-block;opacity:0;transform:translateY(.4em);transition:opacity .5s var(--ease),transform .6s var(--ease)}
 .quote.in blockquote .w{opacity:1;transform:none}
-.quote figcaption{display:flex;align-items:center;gap:14px;margin-top:22px;font-size:15px;color:var(--c-ink-3);opacity:0;transition:opacity .6s var(--ease) .9s}
-.quote figcaption::before{content:"";width:40px;height:1px;background:var(--c-ink-3)}
+.quote figcaption{display:flex;align-items:center;gap:12px;margin-top:16px;font-size:14px;color:var(--c-ink-3);opacity:0;transition:opacity .6s var(--ease) .9s}
+.quote figcaption::before{content:"";width:32px;height:1px;background:var(--c-ink-3)}
 .quote figcaption b{color:var(--c-ink);font-weight:700}
 .quote.in figcaption{opacity:1}
 
 .pts{list-style:none;margin:0;padding:0}
-.pt{position:relative;display:grid;grid-template-columns:56px minmax(0,1fr);gap:4px 24px;padding:26px 0;cursor:default;
+.pt{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);gap:0 20px;padding:20px 0;cursor:default;
   opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
 .pt + .pt::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--c-line);transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease)}
 .pts.in .pt{opacity:1;transform:none}
@@ -253,7 +258,7 @@ a{color:inherit}
 .pts.in .pt:nth-child(2),.pts.in .pt:nth-child(2)::before{transition-delay:.1s}
 .pts.in .pt:nth-child(3),.pts.in .pt:nth-child(3)::before{transition-delay:.2s}
 .pts.in .pt:nth-child(4),.pts.in .pt:nth-child(4)::before{transition-delay:.3s}
-.sq{grid-row:span 3;position:relative;width:56px;height:56px;display:grid;place-items:center;border:1.5px solid #C9CDD6;font-family:var(--font-mono);font-size:15px;color:var(--c-ink);overflow:hidden;isolation:isolate;
+.sq{grid-row:span 2;position:relative;width:44px;height:44px;display:grid;place-items:center;border:1.5px solid #C9CDD6;font-family:var(--font-mono);font-size:13px;color:var(--c-ink);overflow:hidden;isolation:isolate;
   transition:border-color .3s var(--ease),color .3s var(--ease),transform .3s var(--ease)}
 /* the blue fills up from the bottom, then the number turns white */
 .sq::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--c-blue);transform:scaleY(0);transform-origin:bottom;transition:transform .38s var(--ease)}
@@ -261,11 +266,9 @@ a{color:inherit}
 .pt:hover .sq::before,.pt:focus-visible .sq::before{transform:scaleY(1)}
 .pt:focus-visible{outline:none}
 .pt:focus-visible h3{text-decoration:underline;text-decoration-color:var(--c-blue);text-underline-offset:4px}
-.pt .pl{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-ink-3);transition:color .3s}
-.pt:hover .pl,.pt:focus-visible .pl{color:var(--c-blue)}
-.pt h3{margin:2px 0 0;font-family:var(--font-sans);font-weight:700;font-size:clamp(20px,.9rem + .8vw,26px);letter-spacing:-.02em;line-height:1.2}
-.pt p{margin:6px 0 0;font-size:16.5px;line-height:1.55;color:var(--c-ink-2);max-width:36em}
-.ch-close{margin:var(--sp-5) 0 0;font-size:clamp(16px,.95rem + .25vw,18.5px);line-height:1.65;color:var(--c-ink-2)}
+.pt h3{margin:0;font-family:var(--font-sans);font-weight:700;font-size:18px;letter-spacing:-.015em;line-height:1.3}
+.pt p{margin:4px 0 0;font-size:15px;line-height:1.55;color:var(--c-ink-2);max-width:36em}
+.ch-close{margin:var(--sp-4) 0 0;font-size:16px;line-height:1.6;color:var(--c-ink-2)}
 .ch-close b{color:var(--c-ink)}
 @media (max-width:899.98px){
   .challenge .grid{grid-template-columns:1fr}
@@ -280,7 +283,7 @@ a{color:inherit}
 /* ===================== 03 · Challenge -> Solution (pinned scroll scene) =====================
    gradient opens -> challenge line -> becomes the solution line -> phone rises and pushes it away
    -> phone flips onto an angle -> three labels -> phone twists and flies out of the top. */
-.sol{position:relative;z-index:2;background:#fff;height:470vh}
+.sol{position:relative;z-index:2;background:#fff;height:400vh;margin-top:-2px}  /* overlap the challenge so the dark sticky hero never shows through a hairline */
 .sol .pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 /* full-bleed gradient, drawn in CSS: deep blue at the top, lavender in the middle, peach glow and white at the bottom.
    It fades in from the white page above and fades out to white for the next section, so there are no edges. */
@@ -292,7 +295,7 @@ a{color:inherit}
     radial-gradient(30% 40% at 100% 42%,rgba(146,98,226,.38),rgba(146,98,226,0) 70%),
     radial-gradient(90% 40% at 50% 100%,#FFFFFF 35%,rgba(255,255,255,0) 75%),
     linear-gradient(180deg,#1C48C4 0%,#3156CA 28%,#5470CF 48%,#8E9BD6 61%,#E2DDE9 75%,#FBF4EF 87%,#FFFFFF 100%)}
-.sol .grain{position:absolute;inset:0;opacity:calc(var(--bo,0) * .16);mix-blend-mode:soft-light;pointer-events:none;
+.sol .grain{position:absolute;inset:0;opacity:calc(var(--bo,0) * .16 * (1 - var(--eb,0)));mix-blend-mode:soft-light;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .s-text{position:absolute;left:0;right:0;top:50%;z-index:5;text-align:center;padding-inline:var(--gutter);color:#fff;
   transform:translateY(calc(-50% + var(--ty,0px)));opacity:var(--to,1);will-change:transform,opacity}
@@ -316,15 +319,26 @@ a{color:inherit}
 .ph .sl{position:absolute;inset:.5%;border-radius:15.5% / 7.6%}
 .ph .gl{position:absolute;inset:0;border-radius:15.5% / 7.6%;pointer-events:none;mix-blend-mode:screen;opacity:var(--gl,0);
   background:linear-gradient(115deg,rgba(255,255,255,0) 35%,rgba(255,255,255,.35) 48%,rgba(255,255,255,0) 60%);background-size:250% 100%;background-position:var(--gx,60%) 0}
+/* the real 3D phone (three.js) replaces the CSS one above once it has loaded */
+.sol3d{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none;opacity:0;transition:opacity .5s var(--ease)}
+.sol.gl .sol3d{opacity:1}.sol.gl .ph{visibility:hidden}
 .ph-shadow{position:absolute;left:50%;top:50%;z-index:3;width:calc(var(--pw,300px) * 1.5);height:calc(var(--pw,300px) * .5);margin-left:calc(var(--pw,300px) * -.75);border-radius:50%;
   background:radial-gradient(closest-side,rgba(110,60,30,.32),rgba(110,60,30,0));filter:blur(8px);opacity:var(--so,0);transform:translateY(var(--sy,0px)) scale(var(--ss,1));pointer-events:none}
 
-.chip3{position:absolute;left:50%;top:50%;z-index:6;display:flex;align-items:center;gap:8px;padding:8px 16px 8px 11px;border-radius:999px;
+.chip3{position:absolute;left:50%;top:50%;z-index:6;display:flex;align-items:center;gap:10px;padding:11px 22px 11px 15px;border-radius:999px;
   background:rgba(255,255,255,.62);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.8),0 18px 40px -18px rgba(40,30,80,.35);color:#14151A;white-space:nowrap;
   opacity:0;will-change:transform,opacity,filter}
-.chip3 svg{flex:none;width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.chip3 b{display:block;white-space:nowrap;font-family:var(--font-sans);font-weight:700;font-size:clamp(14px,.7rem + .45vw,19px);letter-spacing:-.015em;line-height:1.1}
+.chip3 svg{flex:none;width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* scroll nudge: appears at the bottom, well clear of the phone and its shadow, once the reader pauses on the floating phone */
+.s-more{position:absolute;left:50%;bottom:clamp(18px,3.5vh,36px);z-index:6;display:flex;flex-direction:column;align-items:center;gap:2px;color:#4B505B;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;pointer-events:none;opacity:0;transform:translate(-50%,8px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.s-more.on{opacity:1;transform:translate(-50%,0)}
+.s-more span{margin-bottom:6px}
+.s-more i{display:block;width:10px;height:10px;border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;transform:rotate(45deg);margin-top:-4px;animation:sMore 1.6s ease-in-out infinite}
+.s-more i + i{animation-delay:.18s;opacity:.55}
+@keyframes sMore{0%,100%{transform:translateY(-2px) rotate(45deg)}50%{transform:translateY(3px) rotate(45deg)}}
+@media (prefers-reduced-motion:reduce){.s-more{transition:none}.s-more i{animation:none}}
+.chip3 b{display:block;white-space:nowrap;font-family:var(--font-sans);font-weight:700;font-size:clamp(15px,.8rem + .55vw,23px);letter-spacing:-.015em;line-height:1.1}
 .chip3 span{display:block;font-size:clamp(12px,.65rem + .2vw,14px);color:#4B505B;line-height:1.3;margin-top:2px}
 @media (max-width:767.98px){
   .chip3{gap:6px;padding:6px 12px 6px 9px}
@@ -341,10 +355,15 @@ a{color:inherit}
   --a-ink:#0B1230;--a-ink-2:#454B63;--a-ink-3:#62667A;--paper:#FBF8F5;--paper-2:#F1EEEB;--stroke:#E3E0DF;
   --hot:#FFB98A;--warm:#9A6700;--warm-bg:#FFF3CF;--ok:#13734A;--ok-bg:#E3F3EA;
   --app:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;--app-d:'Familjen Grotesk','Helvetica Neue',Arial,sans-serif;--app-m:'Geist Mono',ui-monospace,Menlo,monospace;
-  position:relative;z-index:2;background:var(--cream);color:var(--f-ink)}
+  position:relative;z-index:2;background:var(--cream);color:var(--f-ink);
+  /* slides up over the end of the pinned scene: it starts arriving as soon as the phone has flown out and the sky has
+     turned cream (scene progress .89 of its 350vh run), instead of after a long empty cream stretch */
+  margin-top:-38vh}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .ft-dither{display:block;width:100%;height:clamp(110px,14vw,170px);image-rendering:pixelated;image-rendering:crisp-edges}
 .ft-intro{text-align:center;padding:clamp(72px,10vw,140px) var(--gutter) 0}
-.ft-intro .k,.fs .lbl{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--f-ink-3)}
+.ft-intro .k{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--f-ink-3)}
+.fs .lbl{font-family:var(--font-mono);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--f-ink-2)}
 .ft-intro h2{margin:12px auto 0;font-family:var(--font-sans);font-weight:700;font-size:clamp(32px,1.4rem + 2.6vw,60px);letter-spacing:-.035em;line-height:1.02;max-width:14em}
 .ft-intro p{margin:14px auto 0;max-width:34em;font-size:clamp(16px,.95rem + .3vw,19px);color:var(--f-ink-2)}
 
@@ -357,17 +376,26 @@ a{color:inherit}
 
 /* feature copy */
 .fs{position:relative}
-.fs-copy{display:flex;flex-direction:column;gap:14px;max-width:30rem}
-.fs-copy h3{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(30px,1.2rem + 2.2vw,52px);letter-spacing:-.035em;line-height:1.04}
-.fs-copy p{margin:0;font-size:clamp(16px,.95rem + .3vw,19px);line-height:1.55;color:var(--f-ink-2)}
-.fs-ai{display:flex;gap:10px;align-items:flex-start;margin-top:6px;padding-top:16px;border-top:1px solid var(--f-line);font-size:15.5px;line-height:1.5;color:var(--cobalt-700)}
-.fs-ai svg{flex:none;width:20px;height:20px;margin-top:1px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linejoin:round}
+.fs-copy{display:flex;flex-direction:column;gap:12px;max-width:30rem}
+.fs-copy h3{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(22px,1rem + .7vw,27px);letter-spacing:-.025em;line-height:1.15}
+.fs-copy p{margin:0;font-size:16px;line-height:1.6;color:var(--f-ink-2)}
+.fs-ai{display:flex;gap:10px;align-items:flex-start;margin-top:6px;padding-top:16px;border-top:1px solid var(--f-line);font-size:14.5px;line-height:1.5;color:var(--cobalt-700)}
+.fs-ai svg{flex:none;width:18px;height:18px;margin-top:1px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linejoin:round}
 .fs-center .fs-copy{margin-inline:auto;text-align:center;align-items:center;max-width:36rem}
 .fs-center .fs-ai{border-top:0;padding-top:0}
 .fs-row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(32px,6vw,96px);align-items:center}
 .fs-row.flip{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .rv.in{opacity:1;transform:none}
+/* section title, the same as 01 About and 02 Challenge: number, title, short bar; then a lead line at About's lead size */
+.sec-t{display:flex;flex-direction:column;gap:12px}
+.sec-t .row{display:flex;align-items:baseline;gap:12px}
+.sec-t .no{font-family:var(--font-mono);font-size:18px;color:#6B707C}
+.sec-t h2{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(22px,1rem + .6vw,26px);line-height:1.1;letter-spacing:-.025em;color:inherit}
+.sec-t .bar{display:block;width:40px;height:3px;border-radius:2px;background:currentColor}
+.sec-t.c{align-items:center}
+.fs-copy .lead-t,.aiA .lead-t{margin:0;font-family:var(--font-sans);font-weight:700;font-size:clamp(18px,.9rem + .45vw,22px);line-height:1.4;letter-spacing:-.012em}
+.fs-copy .sec-t{margin-bottom:8px}
 
 /* ---------- app components (rebuilt from the Figma screens, app fonts) ---------- */
 .ac{background:#fff;color:var(--a-ink);border-radius:18px;font-family:var(--app);font-size:13px;line-height:1.4;box-shadow:0 1px 0 rgba(11,18,48,.04),0 24px 50px -24px rgba(40,30,20,.35),0 0 0 1px rgba(11,18,48,.05)}
@@ -419,39 +447,36 @@ a{color:inherit}
 
 /* ---------- 2 · Pipeline visual ---------- */
 .pipe-vis{position:relative;height:clamp(560px,50vw,700px)}
-.pipe-vis .cph{position:absolute;right:8%;top:0;--w:clamp(250px,22vw,310px)}
-.pp-top{background:linear-gradient(#2342C2,#3D5BD6);color:#fff;padding:0 7% 10%;filter:brightness(.72)}
-.pp-top .nx{display:flex;justify-content:space-between;align-items:center;font-size:.8em;font-weight:700;letter-spacing:.04em;opacity:.85;margin-top:2%}
-.pp-top .nm{font-family:var(--app-d);font-weight:600;font-size:1.55em;margin-top:3%}
-.pp-top .sub{font-size:.85em;opacity:.85}
-.pp-top .cta2{display:flex;gap:3%;margin-top:5%}
-.pp-top .cta2 span{flex:1;background:#fff;color:var(--cobalt);border-radius:999px;text-align:center;font-weight:700;padding:3.4% 0}
-.pp-top .cta2 i{width:2.6em;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.25)}
-.pp-sheet{position:absolute;left:0;right:0;bottom:0;top:31%;background:#fff;border-radius:6% 6% 0 0;padding:4% 6% 0;box-shadow:0 -10px 30px rgba(0,0,0,.25)}
-.pp-sheet .handle{width:12%;height:4px;border-radius:2px;background:#D8D8DE;margin:0 auto 5%}
-.pp-sheet h4{margin:0;font-family:var(--app-d);font-weight:600;font-size:1.45em;letter-spacing:-.01em}
-.pp-sheet .meta{font-size:.82em;color:var(--a-ink-2);margin-top:1.5%}
-.seg3{display:grid;grid-template-columns:repeat(3,1fr);gap:3%;margin:5% 0}
-.seg3 span{display:flex;align-items:center;justify-content:center;gap:5%;border-radius:12px;background:var(--paper-2);font-weight:700;padding:6% 0;font-size:.95em}
+.pipe-vis .cph{position:absolute;right:0;top:0;--w:clamp(250px,22vw,310px)}
+/* real app screens inside the CSS frame: the screenshot fills the screen from the top */
+.cph .scr.shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+/* the pipeline screenshot is taller than the phone, so its tab bar is pinned back on at the bottom */
+.pipe-vis .tabs-crop{position:absolute;left:0;right:0;bottom:0;aspect-ratio:772/165;background:url(assets/phone-pipeline.webp) center bottom/100% auto no-repeat}
+.ls{position:absolute;padding:16px 18px}
+/* staggered down the phone's left side, just touching its edge, so the screen stays readable */
+.ls-head{left:4%;top:1%;width:clamp(260px,22vw,300px)}
+.ls-sig{left:-4%;top:27%;width:clamp(270px,23vw,310px)}
+.ls-sig2{left:2%;top:63%;width:clamp(270px,23vw,310px)}
+.ls .t{display:block;font-family:var(--app-d);font-weight:600;font-size:22px;letter-spacing:-.01em;line-height:1.1}
+.ls .meta{font-size:11.5px;color:var(--a-ink-2);margin-top:4px}
+.ls .k{font-size:10.5px;font-weight:700;letter-spacing:.06em;color:var(--a-ink-3);margin-bottom:2px}
+.ls .seg3{margin:12px 0 0;gap:6px}
+.ls .seg3 span{padding:9px 0;border-radius:10px;font-size:13px;gap:6px}
+.seg3{display:grid;grid-template-columns:repeat(3,1fr)}
+.seg3 span{display:flex;align-items:center;justify-content:center;background:var(--paper-2);font-weight:700}
 .seg3 span.on{background:#F1BF8E}
 .seg3 .mk{width:.85em;height:.85em;border-radius:50%;border:2px solid currentColor;box-sizing:border-box}
 .seg3 .half{background:linear-gradient(90deg,currentColor 50%,transparent 50%)}.seg3 .full{background:currentColor}
-.pp-sheet .sh{font-size:.72em;font-weight:700;letter-spacing:.06em;color:var(--a-ink-2)}
-.sig{display:grid;grid-template-columns:auto 1fr auto;gap:3%;padding:3.6% 0;align-items:start;border-bottom:1px solid var(--stroke)}
-.sig .dt{width:.75em;height:.75em;border-radius:50%;background:var(--cobalt);margin-top:.35em}
-.sig b{display:block;font-size:.95em;line-height:1.3}.sig small{display:block;font-size:.78em;color:var(--a-ink-2);margin-top:1%}
-.sig .st{font-size:.68em;font-weight:700;border-radius:999px;padding:2px 7px;white-space:nowrap}
+.sig{display:grid;grid-template-columns:auto 1fr auto;gap:10px;padding:11px 0;align-items:start;border-bottom:1px solid var(--stroke)}
+.sig:last-of-type{border-bottom:0}
+.sig .dt{position:relative;width:24px;height:24px;border-radius:50%;background:#EAF0FE;flex:none}
+.sig .dt::after{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--cobalt)}
+.sig .dt.w{background:#FFF3CF;display:grid;place-items:center}.sig .dt.w::after{display:none}
+.sig .dt.w svg{width:14px;height:14px;stroke:#B98A12;fill:none;stroke-width:1.8;stroke-linejoin:round}
+.sig b{display:block;font-size:13px;line-height:1.35}.sig small{display:block;font-size:11.5px;color:var(--a-ink-2);margin-top:2px}
+.sig .st{font-size:10.5px;font-weight:700;border-radius:999px;padding:3px 8px;white-space:nowrap}
 .st.s{background:#1A1C24;color:#fff}.st.m{background:var(--cobalt-100);color:var(--cobalt-700)}.st.w{box-shadow:inset 0 0 0 1px #B9BCC6;color:var(--a-ink-2)}
-.pipe-vis .c-filter{position:absolute;left:0;top:18%;width:clamp(240px,22vw,290px);padding:14px 16px;display:flex;flex-direction:column;gap:12px}
-.c-filter .tabs{display:flex;gap:6px}
-.c-filter .tabs span{flex:1;text-align:center;border-radius:10px;padding:8px 0;font-weight:700;font-size:12.5px;background:var(--paper-2);color:var(--a-ink-2)}
-.c-filter .tabs span.on{background:var(--a-ink);color:#fff}
-.c-filter .tabs b{font-weight:500;opacity:.7;margin-left:3px}
-.c-filter .lr{display:flex;justify-content:space-between;align-items:center}
-.pips6{display:flex;gap:3px}.pips6 u{width:16px;height:6px;border-radius:2px;border:1.4px solid #9AA0B4}.pips6 u.d{background:var(--cobalt);border-color:transparent}.pips6 u.c{background:var(--cobalt);border-color:transparent;width:22px}
-.pipe-vis .c-acts{position:absolute;left:12%;top:63%;display:flex;gap:10px;padding:10px 12px;border-radius:999px}
-.c-acts .rb{width:44px;height:44px}
-.c-acts .rb.go{background:#FFF1E5;color:#C2611F}
+.ls .note{margin:4px 0 0;padding-top:10px;border-top:1px solid var(--stroke);font-size:11.5px;line-height:1.45;color:var(--a-ink-3);text-align:center}
 
 /* ---------- 3 · Earnings (pinned) ---------- */
 .earn{position:relative;height:380vh}
@@ -476,7 +501,9 @@ a{color:inherit}
 .e-left,.e-right{position:relative;height:clamp(220px,32vh,300px)}
 .e-card{position:absolute;left:0;right:0;padding:12px 14px;transition:opacity .5s var(--ease),transform .6s var(--ease),filter .5s}
 .e-card.off{opacity:0;transform:translateY(16px) scale(.96);filter:blur(4px);pointer-events:none}
-.e-left .e-card:nth-child(1){top:4%}.e-left .e-card:nth-child(2){top:36%}.e-left .e-card:nth-child(3){top:68%}
+/* the booking cards stack with a gap, so they never touch */
+.e-left{height:auto;display:flex;flex-direction:column;justify-content:center;gap:16px}
+.e-left .e-card{position:relative}
 .bk{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:12.5px}
 .bk .d{grid-column:1/-1;font-family:var(--app-m);font-size:10.5px;color:var(--a-ink-3)}
 .bk b{font-size:13.5px}.bk .amt{font-weight:700;text-align:right}
@@ -492,9 +519,9 @@ a{color:inherit}
 /* ---------- 4 · Communication visual ---------- */
 .comm-vis{position:relative;height:clamp(600px,56vw,760px);margin-top:clamp(28px,4vw,56px)}
 .comm-vis .cph{position:absolute;left:50%;top:0;margin-left:calc(var(--w) / -2);--w:clamp(250px,21vw,300px);z-index:3}
-.cw{position:absolute;z-index:2;width:clamp(240px,22vw,300px);border-radius:16px;overflow:hidden;background:#FBFAF8;font-family:var(--app);color:var(--a-ink);
+.cw{position:absolute;z-index:2;width:clamp(240px,22vw,300px);border-radius:16px;overflow:hidden;background:#fff;font-family:var(--app);color:var(--a-ink);
   box-shadow:0 1px 0 rgba(11,18,48,.04),0 30px 60px -30px rgba(40,30,20,.4),0 0 0 1px rgba(11,18,48,.06);will-change:transform,opacity}
-.cw .bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--stroke);font-size:13px;background:#F5F3EF}
+.cw .bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #E4E6EB;font-size:13px;background:#EEF0F3}
 .cw .bar b{font-weight:700}.cw .bar span{color:var(--a-ink-3)}
 .cw .bar .ap{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;flex:none}
 .cw .bar .ap svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -504,29 +531,8 @@ a{color:inherit}
 .cw .body .sj{font-weight:700}
 .cw .body .meta{font-size:12px;color:var(--a-ink-3);margin-top:6px}
 .cw .body .note{border-left:3px solid #C9A43E;background:#FFF8E5;border-radius:4px 10px 10px 4px;padding:10px 12px}
-.cw .foot{display:flex;align-items:center;gap:8px;padding:9px 14px;border-top:1px solid var(--stroke);font-size:12px;color:var(--a-ink-3);background:#F5F3EF}
+.cw .foot{display:flex;align-items:center;gap:8px;padding:9px 14px;border-top:1px solid #E4E6EB;font-size:12px;color:var(--a-ink-3);background:#EEF0F3}
 .cw .foot b{color:var(--a-ink-2);font-weight:700;letter-spacing:.04em;font-size:10.5px}
-.cm-scr{display:flex;flex-direction:column;height:100%}
-.cm-hd{background:linear-gradient(#1F3FBF,#3756D4);color:#fff;padding:0 6% 5%}
-.cm-hd .r{display:flex;align-items:center;gap:4%}
-.cm-hd .bk2{width:2.2em;height:2.2em;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center}
-.cm-hd .nm{font-weight:700;font-size:1.05em}.cm-hd .sb2{font-size:.78em;opacity:.8}
-.cm-hd .chip{margin-left:auto;font-size:.75em}
-.cm-hd .strip{display:flex;justify-content:space-between;margin-top:4%;border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:2.4% 4%;font-size:.68em;font-weight:700;letter-spacing:.03em}
-.cm-hd .sum{margin-top:4%;background:rgba(255,255,255,.14);border-radius:12px;padding:3.5% 4.5%;font-size:.78em;line-height:1.4}
-.cm-hd .sum b{display:block;font-size:.9em;letter-spacing:.06em;margin-bottom:2%}
-.cm-hd .sum li{margin-left:1.1em}
-.cm-hd ul{margin:0;padding:0}
-.cm-ct{display:flex;justify-content:space-between;padding:3% 6%;font-size:.66em;font-weight:700;color:var(--a-ink-2);letter-spacing:.04em}
-.cm-tl{flex:1;padding:0 5%;display:flex;flex-direction:column;gap:3%;font-size:.8em;overflow:hidden}
-.cm-tl .day{text-align:center;font-size:.85em;color:var(--a-ink-3)}
-.cm-tl .it{background:#fff;border-radius:10px;padding:3% 4%;box-shadow:0 0 0 1px var(--stroke);border-left:3px solid var(--cobalt)}
-.cm-tl .it.r{margin-left:14%;border-left-color:#1F9D57}
-.cm-tl .it small{display:block;font-size:.85em;font-weight:700;color:var(--cobalt)}
-.cm-tl .it.r small{color:#1F9D57}
-.cm-in{display:flex;gap:3%;align-items:center;padding:3% 5% 6%;background:#fff;border-top:1px solid var(--stroke)}
-.cm-in span{flex:1;border-radius:999px;box-shadow:inset 0 0 0 1px var(--stroke);padding:2.6% 5%;font-size:.75em;color:var(--a-ink-3)}
-.cm-in i{width:2em;height:2em;border-radius:50%;background:var(--cobalt)}
 
 /* ---------- 5 · Design system: sliding rows ---------- */
 .dsc{overflow:hidden;margin-top:clamp(28px,4vw,52px)}
@@ -568,14 +574,16 @@ a{color:inherit}
   .dash-vis .c-visits{width:240px;left:0;top:64%}
   .pipe-vis{height:560px;max-width:440px;margin-inline:auto;width:100%}
   .pipe-vis .cph{--w:250px;right:0}
-  .pipe-vis .c-filter{width:230px;top:auto;bottom:4%}
-  .pipe-vis .c-acts{left:auto;right:18%;top:4%}
+  /* small screens: the phone first, then the Lead Score parts stacked under it, so neither covers the other */
+  .pipe-vis{height:auto;display:flex;flex-direction:column;align-items:center;gap:12px}
+  .pipe-vis .cph{position:relative;right:auto;margin-bottom:8px}
+  .pipe-vis .ls{position:relative;left:auto;top:auto;width:100%;max-width:360px;transform:none!important}
   .e-stage{grid-template-columns:1fr;gap:12px;width:min(100%,420px)}
   .e-left{display:none}
   .e-right{height:118px;order:3}
   .e-gauge{max-width:300px}
   .comm-vis{height:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .comm-vis .cph{position:relative;left:auto;margin:0 auto 12px;grid-column:1/-1;--w:250px}
+  .comm-vis .cph{position:relative;left:auto;margin:0 auto 12px;grid-column:1/-1;--w:250px;order:-1}
   .cw{position:relative;width:auto;left:auto!important;top:auto!important;transform:none!important;opacity:1!important}
   .cw .body{font-size:12.5px;padding:10px}.cw .bar,.cw .foot{padding:8px 10px;font-size:11.5px}
 }
@@ -587,7 +595,6 @@ a{color:inherit}
 @media (prefers-reduced-motion:reduce){.ft-div i,.ft-div b{transition:none;transform:none}.ft-div b{transform:rotate(45deg)}.e-card,.e-gauge .seg,.e-gauge .knob{transition:none}}
 .dash-vis .dphone{z-index:1}.dash-vis .ac{z-index:2}
 .pipe-vis .cph{z-index:1}.pipe-vis .ac{z-index:2}
-.pipe-vis .c-acts{top:70%;left:22%}
 
 /* ---------- 06 · The AI layer: five-layer stack (pinned) ---------- */
 .aiA{position:relative;z-index:2;background:#F6F3EE;color:#16171C;height:520vh}
@@ -595,12 +602,15 @@ a{color:inherit}
 .aiA .grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,4vw,64px);align-items:center;width:100%}
 .aiA .lbl{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#868A93}
 .aiA h3{margin:10px 0 0;font-family:var(--font-sans);font-weight:700;font-size:clamp(30px,1.2rem + 2vw,48px);letter-spacing:-.035em;line-height:1.04}
-.aiA .intro{margin-top:14px;font-size:clamp(15.5px,.9rem + .3vw,18px);line-height:1.5;color:#555963;max-width:30em}
+.aiA .intro{margin-top:10px;font-size:16px;line-height:1.6;color:#555963;max-width:30em}
+.aiA .lead-t{margin-top:20px}
 .acc{list-style:none;margin:24px 0 0;padding:0;border-top:1px solid #DCD7CF}
 .acc li{border-bottom:1px solid #DCD7CF}
-.acc button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:14px 4px;font-family:var(--font-sans);font-size:clamp(16px,.9rem + .35vw,19px);font-weight:500;color:#868A93;transition:color .3s}
+.acc button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:13px 4px;font-family:var(--font-sans);font-size:16px;font-weight:500;color:#868A93;transition:color .3s}
 .acc button:focus-visible{outline:2px solid #2B4BE0;outline-offset:2px;border-radius:6px}
-.acc button i{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-style:normal;font-size:15px;line-height:1;transition:transform .3s,opacity .3s}
+.acc button i{position:relative;flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid currentColor;box-sizing:border-box;font-size:0;transition:transform .3s,opacity .3s}
+.acc button i::before,.acc button i::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;border-radius:1px;background:currentColor;transform:translate(-50%,-50%)}
+.acc button i::after{transform:translate(-50%,-50%) rotate(90deg)}
 .acc li.on button{color:#16171C;font-weight:700}
 .acc li.on button i{transform:rotate(45deg);opacity:0}
 .acc .body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
@@ -661,10 +671,11 @@ a{color:inherit}
     radial-gradient(30% 40% at 100% 40%,rgba(146,98,226,.35),rgba(146,98,226,0) 70%),
     linear-gradient(180deg,#3156CA 0%,#2A4FC7 40%,#5470CF 70%,#8E9BD6 100%)}
 .endx .nightfall{position:absolute;inset:0;background:var(--night);opacity:var(--nf,0)}
-.endx .pin > .lbl{position:relative;z-index:3;color:var(--w-72);margin-bottom:10px}
+.endx .pin > .sec-t{position:relative;z-index:3;color:#fff;margin-bottom:22px}
+.endx .sec-t .no{color:var(--w-55)}
 .endx .count{position:relative;z-index:3;font-weight:700;font-size:clamp(120px,18vw,260px);letter-spacing:-.06em;line-height:.85;font-variant-numeric:tabular-nums;text-shadow:0 10px 60px rgba(10,20,80,.35)}
 .endx .caps{position:relative;z-index:3;display:grid;margin-top:14px;text-align:center;padding-inline:var(--gut)}
-.endx .caps p{grid-area:1/1;font-size:clamp(18px,1rem + 1vw,30px);font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.endx .caps p{grid-area:1/1;font-size:clamp(18px,1rem + .6vw,24px);font-weight:700;letter-spacing:-.02em;line-height:1.2}
 .endx .caps .w{display:inline-block}
 .endx .glow{position:absolute;left:50%;top:46%;width:300px;height:300px;border-radius:50%;transform:translate(-50%,-50%) scale(var(--gs,.4));opacity:var(--go,0);background:radial-gradient(closest-side,rgba(255,185,138,.8),rgba(141,184,255,.4) 60%,transparent);filter:blur(30px);z-index:2}
 .endx .tl{position:absolute;left:50%;top:50%;z-index:2;display:flex;align-items:center;gap:8px;padding:9px 14px 9px 9px;border-radius:14px;background:rgba(255,255,255,.92);color:var(--ink);box-shadow:0 18px 40px -18px rgba(10,20,80,.5);font-size:14px;font-weight:700;white-space:nowrap;will-change:transform,opacity}
@@ -674,40 +685,44 @@ a{color:inherit}
 .rows{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--w-line)}
 .endx .rows div{padding:24px 18px 24px 0;font-size:15px;color:var(--w-72)}
 .endx .rows div + div{padding-left:18px;border-left:1px solid var(--w-line)}
-.endx .rows b{display:block;color:#fff;font-size:17px;letter-spacing:-.01em;margin-bottom:4px}
+.endx .rows b{display:block;color:#fff;font-size:16px;letter-spacing:-.01em;margin-bottom:4px}
 .endx .road{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:clamp(28px,3vw,40px)}
 .endx .road::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:linear-gradient(90deg,#8FAEFF,var(--apricot) 55%,var(--w-line))}
 .endx .stop{position:relative;padding-top:34px}
 .endx .stop::before{content:"";position:absolute;top:2px;left:0;width:16px;height:16px;border-radius:50%;background:var(--night);border:2px solid var(--w-55)}
-.endx .stop.now::before{background:#8FAEFF;border-color:#8FAEFF;box-shadow:0 0 0 6px rgba(143,174,255,.18)}
+.endx .stop.now::before{z-index:1;background:#8FAEFF;border-color:#8FAEFF;box-shadow:0 0 0 6px rgba(143,174,255,.18),0 0 14px 4px rgba(143,174,255,.7),0 0 34px 10px rgba(143,174,255,.35)}
+/* the shipped dot breathes: a ring that grows and fades */
+.endx .stop.now::after{content:"";position:absolute;top:2px;left:0;width:16px;height:16px;border-radius:50%;background:#8FAEFF;animation:shipped 2.4s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes shipped{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.8);opacity:0}}
 .endx .stop.nx::before{background:var(--apricot);border-color:var(--apricot)}
 .endx .stop .lbl{color:var(--w-55)}
-.endx .stop b{display:block;font-size:20px;letter-spacing:-.015em;margin-top:6px}
+.endx .stop b{display:block;font-size:18px;letter-spacing:-.015em;margin-top:6px}
 .endx .stop span{display:block;color:var(--w-72);font-size:15px;margin-top:4px;max-width:22em}
 .endx .thanks{margin-top:clamp(64px,8vw,110px);display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding:clamp(24px,3vw,40px);border-radius:28px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px var(--w-line)}
-.endx .thanks h3{margin:0;font-weight:700;font-size:clamp(28px,1.2rem + 2vw,46px);letter-spacing:-.03em;line-height:1.05}
+.endx .thanks h3{margin:0;font-weight:700;font-size:clamp(24px,1rem + 1vw,32px);letter-spacing:-.03em;line-height:1.05}
 .endx .thanks h3 em{font-style:normal;color:var(--apricot)}
 .endx .btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 24px;border-radius:999px;background:#fff;color:var(--night);font-weight:700;text-decoration:none;font-size:15px;transition:transform .2s var(--ease)}
 .endx .btn:hover{transform:translateY(-2px)}
 .endx .btn.g{background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.3)}
 .endx .btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .endx .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:28px 0 36px;border-top:1px solid var(--w-line);margin-top:clamp(56px,7vw,96px);font-size:14px;color:var(--w-55)}
+.endx .foot .credit{display:block;margin-top:6px;font-size:12px;color:var(--w-55)}.endx .foot .credit a{text-decoration:underline;text-underline-offset:2px}
 .endx .foot nav{display:flex;gap:20px}.endx .foot a{text-decoration:none}.endx .foot a:hover{color:#fff}
 .endx .rest{position:relative;z-index:2;margin-top:-16vh}
 .endx .sh{margin-top:clamp(72px,9vw,120px)}
 .endx .sh .lbl{color:var(--w-55)}
-.endx .sh h2{margin:10px 0 0;font-weight:700;font-size:clamp(28px,1.2rem + 2vw,46px);letter-spacing:-.035em;line-height:1.05}
-.endx .sh p{margin-top:10px;color:var(--w-72);max-width:34em}
+.endx .sh .lead-t{margin:20px 0 0;font-weight:700;font-size:clamp(18px,.9rem + .45vw,22px);line-height:1.4;letter-spacing:-.012em}
+.endx .sh p{margin-top:8px;font-size:16px;line-height:1.6;color:var(--w-72);max-width:34em}
 .endx .rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .endx .rv.in{opacity:1;transform:none}
 @media (max-width:899.98px){
   .endx .rows{grid-template-columns:1fr 1fr}.endx .rows div:nth-child(3){padding-left:0;border-left:0}.endx .rows div:nth-child(n+3){border-top:1px solid var(--w-line)}
   .endx .road{grid-template-columns:1fr;gap:26px}.endx .road::before{left:7px;right:auto;top:0;bottom:0;width:2px;height:auto;background:linear-gradient(180deg,#8FAEFF,var(--apricot) 55%,var(--w-line))}
-  .endx .stop{padding-top:0;padding-left:34px}.endx .stop::before{top:3px}
+  .endx .stop{padding-top:0;padding-left:34px}.endx .stop::before,.endx .stop.now::after{top:3px}
   .endx .tl{font-size:12px;padding:7px 10px 7px 7px}.endx .tl i{width:18px;height:18px}
 }
 @media (max-width:519.98px){.endx .rows{grid-template-columns:1fr}.endx .rows div + div{padding-left:0;border-left:0;border-top:1px solid var(--w-line)}}
-@media (prefers-reduced-motion:reduce){.endx .rv{opacity:1;transform:none;transition:none}}
+@media (prefers-reduced-motion:reduce){.endx .rv{opacity:1;transform:none;transition:none}.endx .stop.now::after{animation:none;opacity:0}}
 
 .endx{position:relative;z-index:2;color:#fff;background:#0F1F6B}
 </style>
@@ -733,14 +748,15 @@ a{color:inherit}
             </div>
           </div>
         </div>
+        <canvas class="gl3d" id="gl3d" aria-hidden="true"></canvas>
         <div class="grab" id="grab" tabindex="0" role="slider" aria-label="Spin the phone. Drag sideways, or use the left and right arrow keys." aria-valuemin="-180" aria-valuemax="180" aria-valuenow="0" aria-valuetext="Facing front"></div>
-        <span class="hint" aria-hidden="true"><svg viewBox="0 0 30 16"><path d="M2 12c6-8 18-10 26-6"/><path d="M24 2l4 4-5 2"/></svg>Drag to spin</span>
+        <span class="hint" aria-hidden="true"><svg viewBox="0 0 44 26"><path d="M3 2C4 14 15 21 37 21"/><path d="M32.5 16.5l4.5 4.5-4.5 4.5"/></svg><span>Drag to spin</span></span>
       </div>
       <div class="text">
         <h1 id="hero-h" class="h">The mobile CRM that tells RMs what to do next.</h1>
-        <div class="cta"><a class="pill" href="#solution" id="startDay">Start the day <svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a><span class="status">Case study · 2024–25 // <a href="#">Design system</a></span></div>
+        <div class="cta"><a class="pill" href="#ending" id="startDay">Skip to results <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v15M6 13.5l6 6 6-6"/></svg></a></div>
       </div>
-      <p class="cap">Nested ranks the leads most likely to slip, explains every AI pick with a reason and a confidence level, and keeps a 30-minute clock on every new enquiry.</p>
+      <p class="cap">Nested ranks the leads most likely to slip, explains every AI pick, and starts a 30-minute clock on every new enquiry.</p>
     </div>
   </div>
 </section>
@@ -751,13 +767,12 @@ a{color:inherit}
       <span class="bar" aria-hidden="true"></span>
     </div>
     <div class="ab-body">
-      <p class="lead" id="lead">Nested is a mobile CRM for real-estate Relationship Managers, the people who handle every property enquiry that comes in. They call leads, share listings, book site visits and close bookings, and the <k>app is the only tool</k> they carry all day.</p>
-      <p class="copy rv">I was the sole designer, owning the product end to end across every flow, surface and release. My brief was to redesign the RM experience and build intelligence into it, so the app stops being a passive tool and starts guiding the RM through the day.</p>
-      <p class="copy rv">This case study follows the four features that moved RMs off their Excel sheets and onto the app.</p>
-      <p class="nda rv"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Nested is a stand-in name. The work is real, but the client is under NDA, so every screen in this case study was rebuilt from scratch.</span></p>
+      <p class="lead" id="lead">Nested is a mobile CRM for real-estate Relationship Managers, who take every property enquiry from first call to booking. The <k>app is the only tool</k> they carry all day.</p>
+      <p class="copy rv">As the sole designer, I owned the product end to end. The brief: redesign the RM experience and build in intelligence, so the app guides the day instead of just recording it. This case study follows the four features that moved RMs off Excel and onto the app.</p>
+      <p class="nda rv"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Nested is a stand-in name. The work is real; the client is under NDA, so every screen here was rebuilt from scratch.</span></p>
       <dl class="meta" id="meta">
-        <div class="r"><dt>Client</dt><dd>Nested <span style="font-weight:500;color:var(--l-ink-3)">(name changed, under NDA)</span></dd></div>
-        <div class="r"><dt>Industry</dt><dd>Real estate<span class="sep">·</span>Residential sales, Mumbai and Thane</dd></div>
+        <div class="r"><dt>Client</dt><dd>Nested <span style="font-weight:500;color:var(--l-ink-3)">(Name changed, under NDA)</span></dd></div>
+        <div class="r"><dt>Industry</dt><dd>Real estate</dd></div>
         <div class="r"><dt>Role</dt><dd>Sole product designer<span class="sep">·</span>End to end</dd></div>
         <div class="r"><dt>Scope</dt><dd>Mobile app (UX/UI)<span class="sep">·</span>AI features<span class="sep">·</span>Design system</dd></div>
         <div class="r"><dt>Timeline</dt><dd>2024–25</dd></div>
@@ -840,7 +855,7 @@ a{color:inherit}
 <section class="challenge" id="challenge" aria-labelledby="ch-h">
   <div class="wrap grid">
     <div class="ab-title">
-      <div class="row"><h2 id="ch-h">The challenge</h2></div>
+      <div class="row"><span class="no">02</span><h2 id="ch-h">The challenge</h2></div>
       <span class="bar" aria-hidden="true"></span>
     </div>
     <div class="ch-body">
@@ -853,10 +868,10 @@ a{color:inherit}
       </figure>
 
       <ol class="pts" id="chPts">
-        <li class="pt" tabindex="0"><span class="sq" aria-hidden="true">01</span><span class="pl">Visibility</span><h3>“How am I doing today?”</h3><p>No single view of the day. Targets, visits and follow-ups sat in different tools, so every morning started with digging.</p></li>
-        <li class="pt" tabindex="0"><span class="sq" aria-hidden="true">02</span><span class="pl">Motivation</span><h3>“How much will I earn?”</h3><p>Nobody knew until month-end. Incentive math lived in Excel, and RMs didn't trust the numbers until the paycheck arrived.</p></li>
-        <li class="pt" tabindex="0"><span class="sq" aria-hidden="true">03</span><span class="pl">Structure</span><h3>“Who do I call first?”</h3><p>Based on gut feeling. No scoring, no prioritisation, nothing telling them where to focus.</p></li>
-        <li class="pt" tabindex="0"><span class="sq" aria-hidden="true">04</span><span class="pl">Context</span><h3>“What happened with this lead?”</h3><p>RMs scrolled back through WhatsApp, and there was no shared context when more than one RM spoke to the same lead.</p></li>
+        <li class="pt" tabindex="0"><span class="sq" aria-hidden="true">01</span><h3>“How am I doing today?”</h3><p>No single view of the day. Targets, visits and follow-ups sat in different tools, so every morning started with digging.</p></li>
+        <li class="pt" tabindex="0"><span class="sq" aria-hidden="true">02</span><h3>“How much will I earn?”</h3><p>Nobody knew until month-end. Incentive math lived in Excel, and RMs didn't trust the numbers until the paycheck arrived.</p></li>
+        <li class="pt" tabindex="0"><span class="sq" aria-hidden="true">03</span><h3>“Who do I call first?”</h3><p>Based on gut feeling. No scoring, no prioritisation, nothing telling them where to focus.</p></li>
+        <li class="pt" tabindex="0"><span class="sq" aria-hidden="true">04</span><h3>“What happened with this lead?”</h3><p>RMs scrolled back through WhatsApp, and there was no shared context when more than one RM spoke to the same lead.</p></li>
       </ol>
       <p class="ch-close rv">Each question became a chapter of the redesign. <b>Thumb-first</b> and <b>one question per screen</b> became the ground rules for all four.</p>
     </div>
@@ -875,6 +890,7 @@ a{color:inherit}
       </div>
       <div class="scene3d">
         <span class="ph-shadow" id="phShadow" aria-hidden="true"></span>
+        <canvas class="sol3d" id="sol3d" aria-hidden="true"></canvas>
         <div class="ph" id="ph3">
           <div id="phSlices" aria-hidden="true"></div>
           <div class="bk" aria-hidden="true"></div>
@@ -884,6 +900,7 @@ a{color:inherit}
       <div class="chip3" data-i="0"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg><b>Guides</b></div>
       <div class="chip3" data-i="1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.7 1.8 1.8.7-1.8.7L19 20l-.7-1.8-1.8-.7 1.8-.7z"/></svg><b>Explains</b></div>
       <div class="chip3" data-i="2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10h18M16 15h2"/></svg><b>Earns</b></div>
+      <div class="s-more" id="sMore" aria-hidden="true"><span>Scroll down</span><i></i><i></i></div>
     </div>
   </div>
 </section>
@@ -904,13 +921,7 @@ a{color:inherit}
     <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
   </svg>
 
-  <div class="ft-intro rv">
-    <div class="k">02 · The solution</div>
-    <h2 id="ft-h">Four features. One working day.</h2>
-    <p>Each one answers one of the RM's morning questions, and each has an AI layer that explains itself.</p>
-  </div>
-
-  <div class="ft-div" aria-hidden="true"><i></i><b></b><i></i></div>
+  <h2 class="sr-only" id="ft-h">03 · The solution: four features, one working day</h2>
 
   <!-- 1 · Dashboard: image left, text right -->
   <section class="fs wrap" aria-labelledby="f1-h">
@@ -949,32 +960,28 @@ a{color:inherit}
         <p>Filters open on Today, New and Overdue across six pipeline stages, and every card can call, WhatsApp or navigate in one tap. Voice notes transcribe in the background.</p>
         <div class="fs-ai"><svg><use href="#i-spark"/></svg><span>Each lead is scored Hot, Warm or Cold from engagement signals. Tap the score to see why; new leads show Pending.</span></div>
       </div>
-      <div class="pipe-vis rv" aria-label="Lead score sheet for Priya Nair, with filters and one-tap actions">
-        <div class="ac c-filter par" data-par="50">
-          <div class="tabs"><span class="on">Today<b>6</b></span><span>New<b>3</b></span><span>Overdue<b>2</b></span></div>
-          <div class="lr"><div><div class="ttl" style="font-size:15px">Priya Nair</div><div class="muted" style="font-size:11.5px">Site visit · stage 3 of 6</div></div><span class="chip hot"><span class="mk"></span>Hot</span></div>
-          <span class="pips6"><u class="d"></u><u class="d"></u><u class="c"></u><u></u><u></u><u></u></span>
-        </div>
-        <div class="cph par" data-par="-20"><div class="scr">
+      <div class="pipe-vis rv">
+        <div class="cph par" data-par="-20"><div class="scr shot">
           <span class="isl"></span>
-          <div class="pp-top"><div class="sb" style="padding-inline:0"><span>9:41</span><span><i style="width:14px;height:8px"></i><i style="width:20px;height:9px;border-radius:3px"></i></span></div>
-            <div class="nx"><span>NEXT UP · CALLBACK 4:30 PM</span><span class="chip hot" style="font-size:.95em"><span class="mk"></span>Hot</span></div>
-            <div class="nm">Priya Nair</div><div class="sub">2 BHK · Skyline Crest, Thane · ₹1.35 Cr</div>
-            <div class="cta2"><span>Call</span><i></i></div>
-          </div>
-          <div class="pp-sheet">
-            <div class="handle"></div>
-            <h4>Why this lead is marked Hot</h4>
-            <div class="meta">AI score · High confidence · 5 signals · updated 2:10 PM</div>
-            <div class="seg3"><span><i class="mk"></i>Cold</span><span><i class="mk half"></i>Warm</span><span class="on"><i class="mk full"></i>Hot ✓</span></div>
-            <div class="sh">SIGNALS BEHIND THE SCORE</div>
-            <div class="sig"><i class="dt"></i><div><b>Replies on WhatsApp in about 15 minutes.</b><small>WhatsApp · last 5 messages</small></div><span class="st s">Strong</span></div>
-            <div class="sig"><i class="dt"></i><div><b>Visited the site on 28 Sep and asked for the floor plan.</b><small>Visit log + WhatsApp</small></div><span class="st s">Strong</span></div>
-            <div class="sig"><i class="dt"></i><div><b>Budget is clear: ₹1.35 Cr for a 2 BHK.</b><small>Enquiry form + call on 2 Oct</small></div><span class="st m">Medium</span></div>
-            <div class="sig" style="border:0"><i class="dt" style="background:#E3B341"></i><div><b>No home-loan pre-approval shared yet.</b><small>Your note · 2 Oct</small></div><span class="st w">Weak</span></div>
-          </div>
+          <img src="assets/phone-pipeline.webp" width="772" height="2000" loading="lazy" decoding="async" alt="Pipeline screen: 62 leads across six stages, filtered to Today, with Priya Nair next up for a 4:30 PM callback">
+          <span class="tabs-crop" aria-hidden="true"></span>
         </div></div>
-        <div class="ac c-acts par" data-par="50"><span class="rb call"><svg><use href="#i-phone"/></svg></span><span class="rb wa"><svg><use href="#i-chat"/></svg></span><span class="rb go"><svg><use href="#i-nav"/></svg></span></div>
+        <!-- the Lead Score bottom sheet, in three floating parts -->
+        <div class="ac ls ls-head par" data-par="40" aria-hidden="true">
+          <b class="t">Lead Score</b>
+          <div class="meta">AI score · High confidence · 5 signals · updated 2:10 PM</div>
+          <div class="seg3"><span><i class="mk"></i>Cold</span><span><i class="mk half"></i>Warm</span><span class="on"><i class="mk full"></i>Hot ✓</span></div>
+        </div>
+        <div class="ac ls ls-sig par" data-par="48" aria-hidden="true">
+          <div class="k">SIGNALS BEHIND THE SCORE</div>
+          <div class="sig"><i class="dt"></i><div><b>Replies on WhatsApp in about 15 minutes.</b><small>WhatsApp · last 5 messages</small></div><span class="st s">Strong</span></div>
+          <div class="sig"><i class="dt"></i><div><b>Visited the site on 28 Sep and asked for the floor plan after.</b><small>Visit log + WhatsApp</small></div><span class="st s">Strong</span></div>
+        </div>
+        <div class="ac ls ls-sig2 par" data-par="40" aria-hidden="true">
+          <div class="sig"><i class="dt"></i><div><b>Budget is clear: ₹1.35 Cr for a 2 BHK, matching inventory.</b><small>Enquiry form + call on 2 Oct</small></div><span class="st m">Medium</span></div>
+          <div class="sig"><i class="dt w"><svg><use href="#i-spark"/></svg></i><div><b>No home-loan pre-approval shared yet.</b><small>Your note · 2 Oct</small></div><span class="st w">Weak</span></div>
+          <p class="note">The score estimates how ready she is to book. It isn't a guarantee and it updates as new signals arrive.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1045,21 +1052,9 @@ a{color:inherit}
         <div class="body"><div class="note">She asked about parking back in Sep. Prefers calls after 4 PM.</div></div>
         <div class="foot"><b>NOTE</b> 1:30 PM · visible to the team</div>
       </div>
-      <div class="cph"><div class="scr cm-scr">
+      <div class="cph"><div class="scr shot">
         <span class="isl"></span>
-        <div class="cm-hd"><div class="sb" style="padding-inline:0"><span>9:41</span><span><i style="width:14px;height:8px"></i><i style="width:20px;height:9px;border-radius:3px"></i></span></div>
-          <div class="r"><span class="bk2"><svg class="ico"><use href="#i-back"/></svg></span><div><div class="nm">Ananya Iyer</div><div class="sb2">10 days · 6 messages</div></div><span class="chip warm"><span class="mk"></span>Warm</span></div>
-          <div class="strip"><span>1.5 BHK</span><span>SKYLINE CREST</span><span>800 SQ FT</span><span>₹78 L</span></div>
-          <div class="sum"><b>✦ AI SUMMARY</b><ul><li>Wants a 1 BHK at Greenfield Park, budget ₹78 L.</li><li>Asked if the 20:80 plan applies. Not answered yet.</li><li>Prefers calls after 4 PM (Rohan's note).</li></ul></div>
-        </div>
-        <div class="cm-ct"><span>6 WHATSAPP</span><span>1 EMAIL</span><span>6 CALL</span><span>2 NOTE</span></div>
-        <div class="cm-tl">
-          <div class="day">Sun 28 Sep</div>
-          <div class="it"><small>Lead created · 11:20 AM</small>Enquiry from Skyline Crest: 1.5 BHK, budget about ₹78 L.</div>
-          <div class="it r"><small>Call · 4:30 PM · 6 min</small>Walked through the pricing. She wants the price sheet on WhatsApp.</div>
-          <div class="it r"><small>WhatsApp · 6:10 PM</small>Hi Ananya, sharing the 1 BHK price sheet for Greenfield Park.</div>
-        </div>
-        <div class="cm-in"><span>Type a message…</span><i></i></div>
+        <img src="assets/phone-conversation.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Conversation with Ananya Iyer: a pinned three-line AI summary above one timeline of WhatsApp, calls and notes">
       </div></div>
     </div>
   </section>
@@ -1070,8 +1065,8 @@ a{color:inherit}
   <section class="fs fs-center" aria-labelledby="f5-h">
   <div class="wrap">
     <div class="fs-copy rv">
-      <span class="lbl">03 · Design system</span>
-      <h3 id="f5-h">One system behind every screen.</h3>
+      <div class="sec-t c"><div class="row"><span class="no">04</span><h2 id="f5-h">Design system</h2></div><span class="bar" aria-hidden="true"></span></div>
+      <h3 class="lead-t">One system behind every screen.</h3>
       <p>Two type families, six colours, a temperature scale that reads without colour, and one rule for AI: always show why.</p>
     </div>
   </div>
@@ -1096,13 +1091,12 @@ a{color:inherit}
   </section>
   <div class="ft-end"></div>
 </section>
-<div class="ft-div" aria-hidden="true" style="background:#F6F3EE;margin:0;position:relative;z-index:2"><i></i><b></b><i></i></div>
 <section class="aiA" id="ai" aria-labelledby="ai-h">
   <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-sp" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.7 1.8 1.8.7-1.8.7L19 20l-.7-1.8-1.8-.7 1.8-.7z"/></symbol></svg>
   <div class="pin"><div class="wrap grid">
     <div>
-      <span class="lbl">04 · The AI layer</span>
-      <h3 id="ai-h">From signal to suggestion, in five layers.</h3>
+      <div class="sec-t"><div class="row"><span class="no">05</span><h2 id="ai-h">The AI layer</h2></div><span class="bar" aria-hidden="true"></span></div>
+      <h3 class="lead-t">From signal to suggestion, in five layers.</h3>
       <p class="intro">Every AI moment in Nested follows the same rules, so RMs learn when to trust it and when to check.</p>
       <ol class="acc" id="acc">
         <li class="on"><button type="button" aria-expanded="true">Only what's logged in Nested<i>+</i></button><div class="body"><div><p>The AI reads calls, WhatsApp, email and visits logged in the app. Anything said in person or on a personal phone isn't counted, and the app says so.</p></div></div></li>
@@ -1124,9 +1118,9 @@ a{color:inherit}
   <div class="scr" id="e-scr"><div class="pin" id="e-pin">
     <div class="sky" aria-hidden="true"></div><div class="nightfall" id="e-nf" aria-hidden="true"></div>
     <span class="glow" id="e-glow" aria-hidden="true"></span>
-    <span class="lbl" id="e-end-h">05 · Results</span>
+    <div class="sec-t c"><h2 id="e-end-h">Results</h2></div>
     <div class="count" id="e-n" aria-live="polite">8</div>
-    <div class="caps"><p id="e-capA">tools in an RM’s day</p><p id="e-capB">app. Now the day guides the RM.</p></div>
+    <div class="caps"><p id="e-capA">tools in an RM’s day</p><p id="e-capB">App. Now the day guides the RM.</p></div>
   </div></div>
 
   <div class="rest wrap">
@@ -1136,14 +1130,14 @@ a{color:inherit}
       <div class="rv"><b>Visible incentives</b>Built up and confirmed, all month.</div>
       <div class="rv"><b>Full context</b>Every channel, every RM, before every call.</div>
     </div>
-    <div class="sh rv"><span class="lbl">06 · Next steps</span><h2>Where I'd take it next.</h2><p>Nested v1 covers the RM's day. These are the two things I'd build after it.</p></div>
+    <div class="sh rv"><div class="sec-t"><div class="row"><span class="no">07</span><h2>Next steps</h2></div><span class="bar" aria-hidden="true"></span></div><h3 class="lead-t">Where I'd take it next.</h3><p>Nested v1 covers the RM's day. These are the two things I'd build after it.</p></div>
     <div class="road rv">
       <div class="stop now"><span class="lbl">Shipped</span><b>Nested v1</b><span>Daily Brief, Pipeline, Earnings and Conversations.</span></div>
       <div class="stop nx"><span class="lbl">Next</span><b>Hands-free</b><span>Voice-first logging and lookups for RMs in cars and on site.</span></div>
       <div class="stop"><span class="lbl">Later</span><b>Weekly coaching report</b><span>AI-written feedback that puts what Team Leads know in front of every RM.</span></div>
     </div>
-    <div class="thanks rv"><h3>From eight tools to one.<br><em>Thanks for reading.</em></h3><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="#">Next project <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn g" href="#">All work</a></div></div>
-    <footer class="foot"><span>Nested · a case study by Manish Ray · 2024–25</span><nav><a href="#">Email</a><a href="#">LinkedIn</a><a href="#">Back to top</a></nav></footer>
+    <div class="thanks rv"><h3>From eight tools to one.<br><em>Thanks for reading.</em></h3><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="https://manishray.com">All work <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></svg></a></div></div>
+    <footer class="foot"><span>Nested · a case study by Manish Ray · 2024–25<small class="credit">3D phone: <a href="https://sketchfab.com/3d-models/iphone-14-pro-5cb0778041a34f09b409a38c687bb1d4">“Iphone 14 Pro”</a> by <a href="https://sketchfab.com/misterdude">mister dude</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, screen replaced</small></span><nav><a href="mailto:work.rayleo@gmail.com">Email</a><a href="https://www.linkedin.com/in/manish-ray" target="_blank" rel="noopener">LinkedIn</a><a href="#top">Back to top</a></nav></footer>
   </div>
 </section>
 </main>
@@ -1167,7 +1161,11 @@ a{color:inherit}
   sheen.style.webkitMaskImage = sheen.style.maskImage = 'url("' + img.src + '")';
 
   /* state: phi = spin around the vertical axis through the pivot; L = lean (only animates in on load) */
-  var phi = reduce ? 0 : -200, vphi = 0, L = reduce ? lean() : 0, vL = 0, dragging = false, raf = 0, last = 0;
+  var phi = reduce ? 0 : 62, vphi = 0, L = reduce ? lean() : -10, vL = 0, dragging = false, raf = 0, last = 0;
+  /* entrance: starts side-on (left edge and buttons towards the viewer, screen turned away to the right, standing a little
+     straighter), then turns smoothly to face the viewer while it settles into its lean. A drag hands control to the physics. */
+  var INTRO = 2800, PHI0 = 62, L0 = -10, intro = -1;
+  function eio(u){ return u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; }
 
   function pivot(){
     var r = stage.getBoundingClientRect(), cs = getComputedStyle(stage);
@@ -1177,7 +1175,9 @@ a{color:inherit}
   function paint(){
     /* rotateZ leans it on the corner, then rotateY spins that leaning phone around the vertical line through the corner */
     model.style.transform = 'rotateY(' + phi.toFixed(2) + 'deg) rotateZ(' + L.toFixed(2) + 'deg)';
-    var p = pivot(), rl = L * Math.PI / 180, rp = phi * Math.PI / 180;
+    var p = pivot();
+    if (window.__phone3d) window.__phone3d.draw(phi, L, p.w);
+    var rl = L * Math.PI / 180, rp = phi * Math.PI / 180;
     var reach = p.h * Math.sin(-rl), body = p.w * Math.cos(rl);
     /* floor shadow: the phone's footprint, foreshortened as it spins */
     var c = Math.cos(rp), left = Math.min(-reach * c, body * c * .8), right = Math.max(-reach * c, body * c * .8);
@@ -1192,7 +1192,15 @@ a{color:inherit}
   }
   function step(t){
     var dt = Math.min(.032, (t - (last || t)) / 1000); last = t;
-    /* lean settles with a small wobble (only matters during the entrance) */
+    if (intro >= 0 && !dragging){
+      if (!intro) intro = t;
+      var u = Math.min(1, (t - intro) / INTRO);
+      phi = PHI0 * (1 - eio(u));
+      L = L0 + (lean() - L0) * eio(u);
+      if (u >= 1){ intro = -1; phi = 0; vphi = 0; L = lean(); vL = 0; }
+      paint(); raf = requestAnimationFrame(step); return;
+    }
+    /* lean springs back if the layout changes it */
     vL += (-70 * (L - lean()) - (reduce ? 17 : 6.5) * vL) * dt; L += vL * dt;
     if (!dragging){
       vphi *= Math.exp(-(reduce ? 8 : 1.6) * dt);                    /* spin coasts, then slows */
@@ -1204,17 +1212,20 @@ a{color:inherit}
     }
     paint();
     var settled = !dragging && Math.abs(vphi) < .05 && Math.abs(norm(phi)) < .05 && Math.abs(L - lean()) < .02 && Math.abs(vL) < .02;
-    if (settled){ phi = 0; L = lean(); paint(); raf = 0; last = 0; return; }
+    if (settled){ phi = 0; L = lean(); paint(); raf = 0; last = 0; idle(); return; }
     raf = requestAnimationFrame(step);
   }
   function kick(){ if (!raf){ last = 0; raf = requestAnimationFrame(step); } }
+  /* once the phone has settled after a spin, the hint comes back (after its own 3s fade-in delay) */
+  var idleT = 0;
+  function idle(){ clearTimeout(idleT); if (hero.classList.contains('used')) idleT = setTimeout(function(){ hero.classList.remove('used'); }, 2500); }
 
   /* drag sideways to spin; flick to keep it going */
   var x0 = 0, phi0 = 0, lx = 0, lt = 0, id = null;
   grab.addEventListener('pointerdown', function(e){
     if (e.button !== 0) return;
-    dragging = true; id = e.pointerId; grab.classList.add('drag'); hero.classList.add('used');
-    grab.setPointerCapture(id);
+    clearTimeout(idleT); dragging = true; intro = -1; id = e.pointerId; grab.classList.add('drag'); hero.classList.add('used');
+    try { grab.setPointerCapture(id); } catch (_) {}
     x0 = lx = e.clientX; phi0 = phi; lt = performance.now(); vphi = 0;
     kick();
   });
@@ -1237,6 +1248,7 @@ a{color:inherit}
   grab.addEventListener('pointercancel', end);
   grab.addEventListener('lostpointercapture', end);
   grab.addEventListener('keydown', function(e){
+    clearTimeout(idleT); intro = -1;
     if (e.key === 'ArrowLeft'){ vphi -= 260; } else if (e.key === 'ArrowRight'){ vphi += 260; } else return;
     e.preventDefault(); hero.classList.add('used'); kick();
   });
@@ -1246,10 +1258,20 @@ a{color:inherit}
   function start(){
     hero.classList.add('ready'); paint();
     if (reduce) return;
-    vphi = 420; kick();
+    intro = 0; kick();
   }
-  if (img.complete) requestAnimationFrame(start); else img.addEventListener('load', start);
-  window.__hero = { state: function(){ return { phi: phi, L: L }; } };
+  /* wait for the 3D phone (or its failure), but never more than 2.5s; until then the flat render is the fallback */
+  var started = false, imgOk = img.complete, glDone = !!window.__phone3d;
+  function go(){ if (started || !imgOk) return; started = true; requestAnimationFrame(start); }
+  if (!imgOk) img.addEventListener('load', function(){ imgOk = true; if (glDone) go(); });
+  addEventListener('phone3d', function(e){
+    glDone = true;
+    if (e.detail === 'ready'){ hero.classList.add('gl'); paint(); }
+    go();
+  });
+  setTimeout(function(){ imgOk = true; go(); }, 2500);
+  if (glDone && imgOk) go();
+  window.__hero = { state: function(){ return { phi: phi, L: L }; }, paint: function(){ paint(); } };
 })();
 /* ---------- hero -> About transition and About reveals ---------- */
 (function(){
@@ -1468,8 +1490,8 @@ a{color:inherit}
     [.34, 1.15,  0,   0,   0,  1  ],
     [.52, .14,  10,   5,  -5,  .97],
     [.62, .02,  40,  18, -20,  .92],
-    [.84, .00,  40,  18, -20,  .92],
-    [.97, -1.25, 46, 14, -26,  .86]
+    [.80, .00,  40,  18, -20,  .92],
+    [.90, -1.3, 22,  36,  -4,  .86]
   ];
   function phoneAt(p){
     if (p <= K[0][0]) return K[0];
@@ -1486,19 +1508,23 @@ a{color:inherit}
     sec.style.setProperty('--pw', PW + 'px');
     textH = text.offsetHeight;
   }
-  var spots = { d: [[-.2, -.24], [.19, -.06], [-.18, .16]], m: [[-.2, -.31], [.22, .33], [-.22, .33]] };
+  var spots = { d: [[-.175, -.21], [.155, -.05], [-.16, .14]], m: [[-.2, -.31], [.22, .29], [-.22, .29]] };
 
   var p = 0, inView = false, raf = 0;
+  /* the scene starts half a screen before the section reaches the top: until then the pin is held at the top of the
+     viewport (lifted over the end of the challenge) and the blue fades in over it */
+  var ENTRY = .5;
   function progress(){
-    var r = sec.getBoundingClientRect(), span = r.height - innerHeight;
-    p = clamp(-r.top / span); inView = r.top < innerHeight && r.bottom > 0;
+    var r = sec.getBoundingClientRect(), e = ENTRY * innerHeight, span = r.height - innerHeight + e;
+    p = clamp((e - r.top) / span); inView = r.top - e < innerHeight && r.bottom > 0;
+    pin.style.transform = r.top > 0 ? 'translateY(' + (-Math.min(r.top, e)).toFixed(1) + 'px)' : '';
   }
   function render(t){
     var q = reduce ? (p < .04 ? p : .74) : p;
     /* background: in from the white page, out to the white page */
     sec.style.setProperty('--bo', seg(p, 0, .06).toFixed(3));
     /* soft dissolve into the features: the sky blurs, loses colour and fades into cream */
-    var dz = seg(p, .9, 1), dze = eio(dz);
+    var dz = seg(p, .82, .89), dze = eio(dz);
     sec.style.setProperty('--bl', (dz * 40).toFixed(1) + 'px');
     sec.style.setProperty('--sa', (1 - dz * .6).toFixed(3));
     sec.style.setProperty('--sk', (1 + dz * .12).toFixed(3));
@@ -1520,7 +1546,7 @@ a{color:inherit}
     });
     sec.classList.toggle('solved', swap > .45);
 
-    var k = phoneAt(q), float = (q > .62 && q < .85 && !reduce) ? Math.sin(t / 900) * 6 : 0;
+    var k = phoneAt(q), float = (q > .62 && q < .8 && !reduce) ? Math.sin(t / 900) * 6 : 0;
     var y = k[1] * H + float;
 
     /* the text rides up ahead of the rising phone: its bottom stays a gap above the phone's top */
@@ -1531,16 +1557,17 @@ a{color:inherit}
     var topNow = H / 2 - textH / 2 + ty;                          /* fade as it nears the nav */
     text.style.setProperty('--to', clamp((topNow - 70) / (H * .18)).toFixed(3));
 
+    if (window.__sol3d) window.__sol3d.draw(y, k[2], k[3], k[4], k[5], PW);
     ph.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0) rotateX(' + k[2].toFixed(2) + 'deg) rotateY(' + k[3].toFixed(2) + 'deg) rotateZ(' + k[4].toFixed(2) + 'deg) scale(' + k[5].toFixed(3) + ')';
-    ph.style.setProperty('--gl', (seg(q, .54, .64) * (1 - seg(q, .86, .92))).toFixed(3));
+    ph.style.setProperty('--gl', (seg(q, .54, .64) * (1 - seg(q, .8, .86))).toFixed(3));
     ph.style.setProperty('--gx', (70 - seg(q, .54, .66) * 40).toFixed(1) + '%');
-    var so = seg(q, .56, .64) * (1 - seg(q, .85, .9));
+    var so = seg(q, .56, .64) * (1 - seg(q, .8, .85));
     shadow.style.setProperty('--so', so.toFixed(3));
     shadow.style.setProperty('--sy', (H * .3 + float * .4).toFixed(1) + 'px');
 
     var sp = mob ? spots.m : spots.d;
     chips.forEach(function(c, i){
-      var a = eo(seg(q, .64 + i * .04, .7 + i * .04)), out = seg(q, .84, .88);
+      var a = eo(seg(q, .64 + i * .03, .69 + i * .03)), out = seg(q, .78, .82);
       var v = a * (1 - out), bob = reduce ? 0 : Math.sin(t / 1100 + i * 2) * 4;
       c.style.opacity = v.toFixed(3);
       var b = (1 - a) * 6 + out * 6; c.style.filter = b > .05 ? 'blur(' + b.toFixed(1) + 'px)' : 'none';
@@ -1548,19 +1575,20 @@ a{color:inherit}
     });
   }
   function loop(t){ render(t); raf = inView ? requestAnimationFrame(loop) : 0; }
-  function onScroll(){ progress(); if (inView && !raf) raf = requestAnimationFrame(loop); }
+  /* scroll nudge: shown after a 1.4s pause while the phone floats with its pills; any scroll hides it again */
+  var more = document.getElementById('sMore'), moreT = 0;
+  function nudge(){
+    more.classList.remove('on'); clearTimeout(moreT);
+    var q = reduce ? (p < .04 ? p : .74) : p;
+    if (q > .7 && q < .79) moreT = setTimeout(function(){ more.classList.add('on'); }, 1400);
+  }
+  function onScroll(){ progress(); nudge(); if (inView && !raf) raf = requestAnimationFrame(loop); }
   addEventListener('scroll', onScroll, {passive:true});
   addEventListener('resize', function(){ layout(); onScroll(); render(performance.now()); });
   (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function(){ layout(); render(performance.now()); });
   layout(); onScroll(); render(performance.now());
-  /* hero CTA: jump straight to the floating phone with its three labels */
-  var cta = document.getElementById('startDay');
-  if (cta) cta.addEventListener('click', function(e){
-    e.preventDefault();
-    var y = sec.getBoundingClientRect().top + scrollY + (sec.offsetHeight - innerHeight) * .74;
-    scrollTo({top: y, behavior: reduce ? 'auto' : 'smooth'});
-  });
-  window.__sol = { p: function(){ return p; } };
+  addEventListener('sol3d', function(e){ if (e.detail === 'ready'){ sec.classList.add('gl'); render(performance.now()); } });
+  window.__sol = { p: function(){ return p; }, paint: function(){ render(performance.now()); } };
 })();
 
 /* ---------- 04 · features ---------- */
@@ -1785,6 +1813,183 @@ a{color:inherit}
   var tk = false;
   addEventListener('scroll', function(){ if (!tk){ tk = true; requestAnimationFrame(function(){ tk = false; render(); }); } }, {passive:true});
   addEventListener('resize', render); render();
+})();
+</script>
+<!-- ---------- the real 3D phone (hero and solution scene) ----------
+     Model: "Iphone 14 Pro" by mister dude, CC BY 4.0 (assets/iphone14/license.txt). Loaded once, shown in two canvases.
+     The model's screen is part of one shared texture, so its triangles are split into their own mesh at load and given
+     the app UI (cropped from phone-hero.webp / phone-brief.webp) with planar UVs. The section IIFEs drive the views:
+       hero:     __phone3d.draw(phi, lean, w)            -> event 'phone3d'  ('ready' | 'fail')
+       solution: __sol3d.draw(y, rx, ry, rz, s, pw)      -> event 'sol3d'    ('ready' | 'fail')
+     Angles in degrees and lengths in CSS px, as in the CSS fallbacks they replace. -->
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const say = (name, detail) => dispatchEvent(new CustomEvent(name, { detail }));
+const loadImg = src => { const i = new Image(); i.src = src; return i.decode().then(() => i); };
+
+/* copy the triangles that pass keep(t) into a new geometry */
+function subset(geo, keep){
+  const out = new THREE.BufferGeometry(), n = geo.attributes.position.count / 3;
+  const tris = []; for (let t = 0; t < n; t++) if (keep(t)) tris.push(t);
+  for (const name in geo.attributes){
+    const a = geo.attributes[name], s = a.itemSize, arr = new Float32Array(tris.length * 3 * s);
+    tris.forEach((t, k) => arr.set(a.array.subarray(t * 3 * s, t * 3 * s + 3 * s), k * 3 * s));
+    out.setAttribute(name, new THREE.BufferAttribute(arr, s));
+  }
+  return out;
+}
+
+/* the model, split into body and screen, screen facing +z, 1 unit wide, centred on its bounding box */
+const kit = new GLTFLoader().loadAsync('assets/iphone14/scene.gltf').then(gltf => {
+  const model = gltf.scene; model.updateMatrixWorld(true);
+  let mesh = null; model.traverse(o => { if (o.isMesh) mesh = o; });
+  /* the model is quantized (KHR_mesh_quantization): turn every attribute back into plain floats before editing it */
+  const geo = mesh.geometry.toNonIndexed();
+  for (const name in geo.attributes){
+    const a = geo.attributes[name], n = a.itemSize, f = new Float32Array(a.count * n), get = ['getX', 'getY', 'getZ', 'getW'];
+    for (let i = 0; i < a.count; i++) for (let c = 0; c < n; c++) f[i * n + c] = a[get[c]](i);
+    geo.setAttribute(name, new THREE.BufferAttribute(f, n));
+  }
+  geo.applyMatrix4(mesh.matrixWorld);
+
+  /* the screen lives in the atlas at u 0.645-0.93, v 0-0.625 (the iOS wallpaper) */
+  const uv = geo.attributes.uv, n = geo.attributes.position.count / 3, isScreen = new Uint8Array(n);
+  for (let t = 0; t < n; t++){
+    let u = 0, v = 0; for (let j = 0; j < 3; j++){ u += uv.getX(t * 3 + j) / 3; v += uv.getY(t * 3 + j) / 3; }
+    isScreen[t] = u > .645 && u < .93 && v < .625 ? 1 : 0;
+  }
+  const sGeo = subset(geo, t => isScreen[t]), bGeo = subset(geo, t => !isScreen[t]);
+  const nz = sGeo.attributes.normal.array.reduce((s, x, i) => i % 3 === 2 ? s + x : s, 0);
+  if (nz < 0){ sGeo.rotateY(Math.PI); bGeo.rotateY(Math.PI); }
+
+  const box = new THREE.Box3().setFromBufferAttribute(bGeo.attributes.position);
+  const c = box.getCenter(new THREE.Vector3()), k = 1 / box.getSize(new THREE.Vector3()).x;
+  for (const g of [sGeo, bGeo]){ g.translate(-c.x, -c.y, -c.z); g.scale(k, k, k); }
+  box.setFromBufferAttribute(bGeo.attributes.position);
+
+  /* planar UVs for the screen from its footprint */
+  sGeo.computeBoundingBox();
+  const sb = sGeo.boundingBox, p = sGeo.attributes.position, suv = new Float32Array(p.count * 2);
+  for (let i = 0; i < p.count; i++){
+    suv[i * 2] = (p.getX(i) - sb.min.x) / (sb.max.x - sb.min.x);
+    suv[i * 2 + 1] = (p.getY(i) - sb.min.y) / (sb.max.y - sb.min.y);
+  }
+  sGeo.setAttribute('uv', new THREE.BufferAttribute(suv, 2));
+  if (sGeo.attributes.tangent) sGeo.deleteAttribute('tangent');
+
+  const mat = mesh.material;            /* the model's own PBR material, made opaque so nothing shows through */
+  mat.transparent = false; mat.depthWrite = true; mat.envMapIntensity = 1.2;
+  return { sGeo, bGeo, mat, box };
+});
+
+/* one canvas = one renderer, scene and phone; the screen shows `src` cropped to [x, y, w, h] */
+function view(canvas, src, crop){
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'low-power' });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.1;
+  const scene = new THREE.Scene(), pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+  pmrem.dispose();
+  const key = new THREE.DirectionalLight(0xCFE0FF, 1.6); key.position.set(-1, 1.4, 1.2); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xFFD2B0, .9); rim.position.set(1.2, -.2, -1); scene.add(rim);
+  const camera = new THREE.PerspectiveCamera();
+
+  return Promise.all([kit, loadImg(src)]).then(([kit, img]) => {
+    const c = document.createElement('canvas'); c.width = crop[2]; c.height = crop[3];
+    c.getContext('2d').drawImage(img, crop[0], crop[1], crop[2], crop[3], 0, 0, crop[2], crop[3]);
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    const phone = new THREE.Group();
+    phone.add(new THREE.Mesh(kit.bGeo, kit.mat), new THREE.Mesh(kit.sGeo, new THREE.MeshStandardMaterial({ color: 0x000000,
+      roughness: .06, metalness: 0, emissive: 0xffffff, emissiveMap: tex, toneMapped: false })));
+    let cw = 0, ch = 0;
+    return {
+      renderer, scene, camera, phone, box: kit.box,
+      /* size the drawing buffer, and project so 1 unit = 1 CSS px at z = 0, seen from (ex, ey, d) in canvas px */
+      frame(ex, ey, d){
+        const W = canvas.offsetWidth, H = canvas.offsetHeight;
+        if (W !== cw || H !== ch){ renderer.setSize(W, H, false); cw = W; ch = H; }
+        const n = 10, f = n / d;
+        camera.position.set(0, 0, d);
+        camera.projectionMatrix.makePerspective(-ex * f, (W - ex) * f, ey * f, -(H - ey) * f, n, 8000);
+        camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();
+      },
+      render(){ renderer.render(scene, camera); },
+      watch(repaint){ new ResizeObserver(repaint).observe(canvas); canvas.addEventListener('webglcontextrestored', repaint); }
+    };
+  });
+}
+
+/* ---- hero: the phone stands on its bottom-left corner; spin (Y) wraps lean (Z), like the CSS rotateY() rotateZ() ---- */
+(() => {
+  const canvas = document.getElementById('gl3d'), stage = document.getElementById('stage');
+  if (!canvas) return;
+  const fail = () => say('phone3d', 'fail');
+  try {
+    view(canvas, 'assets/phone-hero.webp', [55, 45, 782, 1697]).then(v => {
+      const spin = new THREE.Group(), lean = new THREE.Group();
+      v.scene.add(spin); spin.add(lean); lean.add(v.phone);
+      /* the pivot sits 7% in from the left edge and 1.25% up from the bottom */
+      const b = v.box, s = b.getSize(new THREE.Vector3());
+      v.phone.children.forEach(m => m.position.set(-(b.min.x + s.x * .07), -(b.min.y + s.y * .0125), 0));
+      window.__phone3d = {
+        /* w = the CSS phone width; the render's phone body is 95.5% of it */
+        draw(phi, l, w){
+          const r = canvas.getBoundingClientRect(), sr = stage.getBoundingClientRect(), cs = getComputedStyle(stage);
+          const scale = r.width / canvas.offsetWidth || 1;      /* the hero shrinks under the About sheet */
+          const px = (sr.left - r.left) / scale + parseFloat(cs.getPropertyValue('--px')) / 100 * stage.offsetWidth;
+          const py = (sr.top - r.top) / scale + parseFloat(cs.getPropertyValue('--py')) / 100 * stage.offsetHeight;
+          v.frame(px, py, 1600);                                   /* the CSS perspective, from the pivot */
+          v.phone.scale.setScalar(w * .955);
+          spin.rotation.y = phi * Math.PI / 180;
+          lean.rotation.z = -l * Math.PI / 180;
+          v.render();
+        }
+      };
+      v.watch(() => window.__hero && window.__hero.paint());
+      say('phone3d', 'ready');
+    }).catch(fail);
+  } catch (e) { fail(); }
+})();
+
+/* ---- solution scene: the phone rises, tilts and flies out; same transform order as the CSS
+        translate3d(0,y) rotateX() rotateY() rotateZ() scale(), seen from the perspective origin (50%, 45%) ---- */
+(() => {
+  const canvas = document.getElementById('sol3d');
+  if (!canvas) return;
+  const fail = () => say('sol3d', 'fail');
+  try {
+    view(canvas, 'assets/phone-brief.webp', [43, 39, 803, 1742]).then(v => {
+      const rx = new THREE.Group(), ry = new THREE.Group(), rz = new THREE.Group();
+      v.scene.add(rx); rx.add(ry); ry.add(rz); rz.add(v.phone);
+      let shown = true;
+      window.__sol3d = {
+        /* pw = the CSS phone width; the render's phone body is 98.5% of it */
+        draw(y, a, b, c, s, pw){
+          const W = canvas.offsetWidth, H = canvas.offsetHeight;
+          /* off screen (before it rises, after it flies out): clear once, then skip */
+          const on = Math.abs(y) < H * .5 + pw * 1.3;
+          if (!on){ if (shown){ v.renderer.clear(); shown = false; } return; }
+          shown = true;
+          v.frame(W / 2, H * .45, 1500);
+          rx.position.set(0, -H * .05 - y, 0);                    /* the pin's centre sits 5% below the camera axis */
+          rx.rotation.x = -a * Math.PI / 180;
+          ry.rotation.y = b * Math.PI / 180;
+          rz.rotation.z = -c * Math.PI / 180;
+          v.phone.scale.setScalar(pw * .985 * s);
+          v.render();
+        }
+      };
+      v.watch(() => window.__sol && window.__sol.paint && window.__sol.paint());
+      say('sol3d', 'ready');
+    }).catch(fail);
+  } catch (e) { fail(); }
 })();
 </script>
 </body>
