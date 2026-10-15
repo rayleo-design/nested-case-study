@@ -230,6 +230,7 @@ a{color:inherit}
 .challenge{--c-ink:#0B0B0C;--c-ink-2:#4B505B;--c-ink-3:#6B707C;--c-line:#E3E6EC;--c-blue:#2A63F2;--c-blue-50:#EEF4FF;
   position:relative;z-index:2;color:var(--c-ink);background:linear-gradient(#F6F4F1 0,#FFFFFF 26vh);padding-block:clamp(72px,10vw,150px) clamp(96px,12vw,180px)}
 .challenge .grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--sp-6) clamp(32px,6vw,96px);align-items:start}
+.challenge .ab-title{position:static}  /* scrolls with the page; only About's title stays pinned */
 .challenge .ab-title .no{color:var(--c-ink-3)}
 .challenge .ab-title .bar{background:var(--c-ink)}
 .challenge.in .ab-title .bar{transform:scaleX(1)}
